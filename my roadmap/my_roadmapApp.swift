@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import AdelsonAuthManager
+import AdelsonValidator
 
 @main
 struct my_roadmapApp: App {
+    
     var body: some Scene {
         WindowGroup {
             AppCoordinator()
+                .task {
+                    await AdelsonConfigHolder.shared.ensureConfigLoaded()
+                }
         }
     }
 }

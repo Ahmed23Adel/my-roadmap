@@ -30,17 +30,29 @@ struct SignupView: View {
                 } // END: Group
                 
                 Form{ //START: form
-                    TextField("First name", text: $viewModel.firstName)
-                        .padding()
-                
-                    TextField("Last name", text: $viewModel.lastName)
-                        .padding()
-                
-                    TextField("Email", text: $viewModel.email)
-                        .padding()
+                    InputFieldWithErrorView(field: viewModel.firstName) {
+                        TextField("First name", text: $viewModel.firstName.value)
+                            .padding()
+                    }
                     
-                    TextField("Password", text: $viewModel.password)
-                        .padding()
+                    InputFieldWithErrorView(field: viewModel.firstName) {
+                        TextField("Last name", text: $viewModel.lastName.value)
+                            .padding()
+                    }
+                    
+                    InputFieldWithErrorView(field: viewModel.firstName) {
+                        TextField("Email", text: $viewModel.email.value)
+                            .padding()
+                    }
+                    
+                    InputFieldWithErrorView(field: viewModel.firstName) {
+                        PasswordView(password: $viewModel.password.value)
+                            .padding()
+                    }
+                                        
+                   
+                    
+                    
                     
                     HStack{ //START: HStack for submit
                         Spacer()
@@ -48,7 +60,7 @@ struct SignupView: View {
                             
                         }
                         .buttonStyle(.borderedProminent)
-                        .disabled(viewModel.isFormValid())
+                        .disabled(!viewModel.isFormValid())
                         .frame(width: 150, height: 60)
                         .controlSize(.large)
                         .tint(Color.yellow)

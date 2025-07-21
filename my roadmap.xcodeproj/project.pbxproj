@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E22E49862E2E879100619289 /* AdelsonValidator in Frameworks */ = {isa = PBXBuildFile; productRef = E22E49852E2E879100619289 /* AdelsonValidator */; };
+		E22E498E2E2E9AEA00619289 /* AdelsonAuthManager in Frameworks */ = {isa = PBXBuildFile; productRef = E22E498D2E2E9AEA00619289 /* AdelsonAuthManager */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E22E49132E2E44A300619289 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E22E49862E2E879100619289 /* AdelsonValidator in Frameworks */,
+				E22E498E2E2E9AEA00619289 /* AdelsonAuthManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,7 @@
 				E22E49072E2E44A100619289 /* my roadmap */,
 				E22E49152E2E44A300619289 /* my roadmapTests */,
 				E22E491F2E2E44A300619289 /* my roadmapUITests */,
+				E22E49842E2E879100619289 /* Frameworks */,
 				E22E49062E2E44A100619289 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +98,13 @@
 				E22E491C2E2E44A300619289 /* my roadmapUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E22E49842E2E879100619289 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +127,8 @@
 			);
 			name = "my roadmap";
 			packageProductDependencies = (
+				E22E49852E2E879100619289 /* AdelsonValidator */,
+				E22E498D2E2E9AEA00619289 /* AdelsonAuthManager */,
 			);
 			productName = "my roadmap";
 			productReference = E22E49052E2E44A100619289 /* my roadmap.app */;
@@ -195,6 +212,10 @@
 			);
 			mainGroup = E22E48FC2E2E44A100619289;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E22E49832E2E865E00619289 /* XCRemoteSwiftPackageReference "AdelsonValidator" */,
+				E22E498C2E2E9AD300619289 /* XCRemoteSwiftPackageReference "AdelsonAuthManager" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E22E49062E2E44A100619289 /* Products */;
 			projectDirPath = "";
@@ -405,6 +426,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -436,6 +458,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,7 +483,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z6S698QJX2;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "test.my-roadmapTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -481,7 +504,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z6S698QJX2;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "test.my-roadmapTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -501,6 +524,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z6S698QJX2;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "test.my-roadmapUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -520,6 +544,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z6S698QJX2;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "test.my-roadmapUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -572,6 +597,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E22E49832E2E865E00619289 /* XCRemoteSwiftPackageReference "AdelsonValidator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Ahmed23Adel/AdelsonValidator.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		E22E498C2E2E9AD300619289 /* XCRemoteSwiftPackageReference "AdelsonAuthManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Ahmed23Adel/AdelsonAuthManager.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E22E49852E2E879100619289 /* AdelsonValidator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E22E49832E2E865E00619289 /* XCRemoteSwiftPackageReference "AdelsonValidator" */;
+			productName = AdelsonValidator;
+		};
+		E22E498D2E2E9AEA00619289 /* AdelsonAuthManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E22E498C2E2E9AD300619289 /* XCRemoteSwiftPackageReference "AdelsonAuthManager" */;
+			productName = AdelsonAuthManager;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E22E48FD2E2E44A100619289 /* Project object */;
 }
