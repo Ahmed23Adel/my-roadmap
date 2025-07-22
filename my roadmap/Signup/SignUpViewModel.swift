@@ -10,12 +10,12 @@ import Combine
 import AdelsonValidator
 import AdelsonAuthManager
 
-class SignUpViewModel: ObservableObject{
+class SignUpViewModel: ProgressViewTrigger, ObservableObject {    
     @Published var firstName = InputFieldValueAndErrorData()
     @Published var lastName = InputFieldValueAndErrorData()
     @Published var email = InputFieldValueAndErrorData()
     @Published var password = InputFieldValueAndErrorData()
-     
+    @Published var isShowLoading = false
     
     func isFormValid() -> Bool{
         return !firstName.value.isEmpty &&
@@ -25,9 +25,13 @@ class SignUpViewModel: ObservableObject{
     }
     
     func tryToSubmit(){
+        isShowLoading = true
         if validateInputs(){
             Task{
                 await signUpUser()
+                await MainActor.run{
+                    isShowLoading = false
+                }
             }
         }
     }
