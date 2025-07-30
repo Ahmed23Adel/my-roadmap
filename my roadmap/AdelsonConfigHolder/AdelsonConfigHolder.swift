@@ -14,7 +14,6 @@ class AdelsonConfigHolder: ObservableObject {
     static let shared = AdelsonConfigHolder()
     
     @Published private(set) var config: AdelsonAuthConfig?
-    @Published private(set) var isLoading = false
     @Published private(set) var loadError: Error?
     
     // Private initializer to ensure singleton usage
@@ -22,30 +21,23 @@ class AdelsonConfigHolder: ObservableObject {
     
     // Load config for the first time
     func loadConfig() async {
-        guard !isLoading else { return } // Prevent multiple simultaneous loads
-        
-        isLoading = true
         loadError = nil
         
-        do {
-            self.config = await AdelsonAuthPredefinedActions.shared.wakeUp(
-                appName: "MyRoadmap",
-                baseUrl: "http://0.0.0.0:8000/",
-                signUpEndpoint: "signup",
-                otpEndpoint: "verify-otp",
-                loginEndpoint: "login",
-                refreshTokenEndPoint: "refresh"
-            )
-        } catch {
-            self.loadError = error
-        }
+        self.config = await AdelsonAuthPredefinedActions.shared.wakeUp(
+            appName: "MyRoadmap",
+            baseUrl: "http://0.0.0.0:8000/",
+            signUpEndpoint: "signup",
+            otpEndpoint: "verify-otp",
+            loginEndpoint: "login",
+            refreshTokenEndPoint: "refresh"
+        )
         
-        isLoading = false
+        
     }
     
     // Ensure config is loaded (call this from App startup)
     func ensureConfigLoaded() async {
-        if config == nil && !isLoading {
+        if config == nil{
             await loadConfig()
         }
     }

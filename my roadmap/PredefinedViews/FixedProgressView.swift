@@ -12,7 +12,15 @@ struct FixedProgressView: View {
         ZStack{
             Color.gray
                 .ignoresSafeArea()
+            VStack{
+                Image("logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 180)
+                
                 ProgressView("Loading...")
+            }
+                
         }
     }
 }

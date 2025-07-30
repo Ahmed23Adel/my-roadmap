@@ -11,4 +11,5 @@ enum Route{
     case home
     case signup
     case settings
+    case login
 }

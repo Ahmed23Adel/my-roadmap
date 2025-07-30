@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SignupView: View {
     @StateObject var viewModel = SignUpViewModel()
+    @EnvironmentObject var coordinator: Coordinator
+    
     var body: some View {
         ZStack{ //START: ZStack
             if viewModel.isShowLoading{ // START: if loading
@@ -74,6 +76,9 @@ struct SignupView: View {
                             
                         } //END: form
                         .scrollContentBackground(.hidden)
+                        Button("Login"){
+                            viewModel.navigateToLoginScreen()
+                        }
                     } // END: VStack
                     
                     
@@ -81,6 +86,9 @@ struct SignupView: View {
             } // END: else if loading
             
         }// END: ZStack
+        .onAppear{
+            viewModel.setCoordinator(coordinator: coordinator)
+        }
     }
 }
 

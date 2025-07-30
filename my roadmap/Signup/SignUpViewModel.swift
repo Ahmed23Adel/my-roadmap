@@ -9,13 +9,19 @@ import Foundation
 import Combine
 import AdelsonValidator
 import AdelsonAuthManager
+import SwiftUI
 
-class SignUpViewModel: ProgressViewTrigger, ObservableObject {    
+class SignUpViewModel: ProgressViewTrigger, ObservableObject {
     @Published var firstName = InputFieldValueAndErrorData()
     @Published var lastName = InputFieldValueAndErrorData()
     @Published var email = InputFieldValueAndErrorData()
     @Published var password = InputFieldValueAndErrorData()
     @Published var isShowLoading = false
+    var coordinator: Coordinator?
+    
+    func setCoordinator(coordinator: Coordinator){
+        self.coordinator = coordinator
+    }
     
     func isFormValid() -> Bool{
         return !firstName.value.isEmpty &&
@@ -68,10 +74,14 @@ class SignUpViewModel: ProgressViewTrigger, ObservableObject {
     private func signUpUser() async {
         let requester = SignUpRequests()
         let _ = await requester.signUp(firstName: firstName.value,
-                         lastName: lastName.value,
-                         email: email.value,
-                         password: password.value,
-                         config: AdelsonConfigHolder.shared.config!)
+                                       lastName: lastName.value,
+                                       email: email.value,
+                                       password: password.value,
+                                       config: AdelsonConfigHolder.shared.config!)
+    }
+    
+    func navigateToLoginScreen(){
+        coordinator?.navigateTo(.login)
     }
 }
 
