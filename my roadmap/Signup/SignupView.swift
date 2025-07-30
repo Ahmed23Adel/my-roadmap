@@ -63,7 +63,7 @@ struct SignupView: View {
                             HStack{ //START: HStack for submit
                                 Spacer()
                                 Button("Submit"){
-                                    
+                                    viewModel.tryToSubmit()
                                 }
                                 .buttonStyle(.borderedProminent)
                                 .disabled(!viewModel.isFormValid())
@@ -88,6 +88,12 @@ struct SignupView: View {
         }// END: ZStack
         .onAppear{
             viewModel.setCoordinator(coordinator: coordinator)
+        }
+        .alert(isPresented: $viewModel.isShowAlert){
+            Alert(title: Text("Notice"),
+                  message: Text(viewModel.alertMsg),
+                  dismissButton: .default(Text("OK"))
+                  )
         }
     }
 }

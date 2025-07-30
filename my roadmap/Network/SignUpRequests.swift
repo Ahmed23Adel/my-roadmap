@@ -30,7 +30,10 @@ class SignUpRequests{
         let operation = TraditionslSignUpOperation<MyRoadmapSignUpResponse>(
             username: email,
             password: password,
-            config: config)
+            config: config,
+            extraUserInfo: ["first_name": firstName, "last_name": lastName]
+        )
+        
         return await operation.execute()
     }
 }

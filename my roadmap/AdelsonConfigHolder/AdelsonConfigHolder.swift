@@ -25,7 +25,7 @@ class AdelsonConfigHolder: ObservableObject {
         
         self.config = await AdelsonAuthPredefinedActions.shared.wakeUp(
             appName: "MyRoadmap",
-            baseUrl: "http://0.0.0.0:8000/",
+            baseUrl: "http://localhost:8000/",
             signUpEndpoint: "signup",
             otpEndpoint: "verify-otp",
             loginEndpoint: "login",
@@ -50,7 +50,7 @@ class AdelsonConfigHolder: ObservableObject {
     // Alternative: Recompute with new parameters
     func recomputeConfig(
         appName: String = "MyRoadmap",
-        baseUrl: String = "http://0.0.0.0:8000/",
+        baseUrl: String = "http://localhost:8000/",
         signUpEndpoint: String = "signup",
         otpEndpoint: String = "verify-otp",
         loginEndpoint: String = "login",

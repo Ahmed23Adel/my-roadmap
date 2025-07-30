@@ -19,6 +19,9 @@ class SignUpViewModel: ProgressViewTrigger, ObservableObject {
     @Published var isShowLoading = false
     var coordinator: Coordinator?
     
+    @Published var isShowAlert = false
+    @Published var alertMsg = ""
+    
     func setCoordinator(coordinator: Coordinator){
         self.coordinator = coordinator
     }
@@ -73,16 +76,28 @@ class SignUpViewModel: ProgressViewTrigger, ObservableObject {
     
     private func signUpUser() async {
         let requester = SignUpRequests()
-        let _ = await requester.signUp(firstName: firstName.value,
+        let result = await requester.signUp(firstName: firstName.value,
                                        lastName: lastName.value,
                                        email: email.value,
                                        password: password.value,
                                        config: AdelsonConfigHolder.shared.config!)
+        handleSignupResult(result)
     }
     
     func navigateToLoginScreen(){
         coordinator?.navigateTo(.login)
     }
+    
+    private func handleSignupResult(_ result: Bool){
+        if result {
+            coordinator?.navigateTo(.login)
+        } else{
+            isShowAlert = true
+            alertMsg = "Error with siging up, pleaes try again"
+        }
+    }
+    
+    
 }
 
 
