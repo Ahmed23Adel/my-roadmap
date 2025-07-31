@@ -46,17 +46,19 @@ struct LoginView: View {
                             InputFieldWithErrorView(field: viewModel.email) { // Fixed: Changed from firstName to email
                                 TextField("Email", text: $viewModel.email.value)
                                     .padding()
+                                    .textInputAutocapitalization(.none)
                             }
                             
                             InputFieldWithErrorView(field: viewModel.password) { // Fixed: Changed from firstName to password
                                 PasswordView(password: $viewModel.password.value)
                                     .padding()
+                                    .textInputAutocapitalization(.none)
                             }
                             
                             HStack{ //START: HStack for submit
                                 Spacer()
                                 Button("Submit"){
-                                    
+                                    viewModel.tryToLogin()
                                 }
                                 .buttonStyle(.borderedProminent)
                                 .disabled(!viewModel.isFormValid())
@@ -78,6 +80,12 @@ struct LoginView: View {
         }// END: ZStack
         .onAppear{
             viewModel.setCoordinator(coordinator: coordinator)
+        }
+        .alert(isPresented: $viewModel.isShowAlert){
+            Alert(title: Text("Notice"),
+                  message: Text(viewModel.alertMsg),
+                  dismissButton: .default(Text("OK"))
+                  )
         }
     }
 }

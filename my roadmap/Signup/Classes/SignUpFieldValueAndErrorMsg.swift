@@ -24,6 +24,8 @@ class InputFieldValueAndErrorData: ObservableObject{
         if !result{
             extractErrorMsg(error: policy.getError() as! AdelsonReadableError)
             showError = true
+        } else{
+            clearError()
         }
         return result
     }
@@ -36,5 +38,10 @@ class InputFieldValueAndErrorData: ObservableObject{
     
     private func extractErrorMsg(error: any AdelsonReadableError){
         errorMsg = error.message
+    }
+    
+    private func clearError(){
+        showError = false
+        errorMsg = ""
     }
 }

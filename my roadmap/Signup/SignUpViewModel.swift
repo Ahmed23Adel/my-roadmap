@@ -38,41 +38,19 @@ class SignUpViewModel: ProgressViewTrigger, ObservableObject {
         if validateInputs(){
             Task{
                 await signUpUser()
-                await MainActor.run{
-                    isShowLoading = false
-                }
             }
         }
+        isShowLoading = false
     }
     
     private func validateInputs() -> Bool{
-        return validateFirstName() && validateLastName() && validateEmail() && validatePassword()
+        let utils = AuthUtilities()
+        let resultFirstAndLastName = utils.validateFirstAndLastName(firstName, lastName)
+        let resultEmailAndPassword = utils.validateEmailAndPassword(email, password)
+        return resultFirstAndLastName && resultEmailAndPassword
     }
     
-    private func validateFirstName() -> Bool{
-        firstName.validate(validators: [
-            StringHasMinLen(minLen: 4),
-            StringIsAllLetters()
-        ])
-    }
-    
-    private func validateLastName() -> Bool{
-        lastName.validate(validators: [
-            StringHasMinLen(minLen: 4),
-            StringIsAllLetters()
-        ])
-    }
-    
-    private func validateEmail() -> Bool{
-        email.validate(validators: [
-            EmailValidator()
-        ])
-    }
-    
-    private func validatePassword() -> Bool{
-        var policy = PredefinedSingleInputPolicies.mediumPasswordPolicy()
-        return password.validate(policy: &policy)
-    }
+   
     
     private func signUpUser() async {
         let requester = SignUpRequests()
@@ -99,5 +77,4 @@ class SignUpViewModel: ProgressViewTrigger, ObservableObject {
     
     
 }
-
 

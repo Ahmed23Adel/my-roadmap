@@ -41,19 +41,21 @@ struct SignupView: View {
                                     .padding()
                             }
                             
-                            InputFieldWithErrorView(field: viewModel.firstName) {
+                            InputFieldWithErrorView(field: viewModel.lastName) {
                                 TextField("Last name", text: $viewModel.lastName.value)
                                     .padding()
                             }
                             
-                            InputFieldWithErrorView(field: viewModel.firstName) {
+                            InputFieldWithErrorView(field: viewModel.email) {
                                 TextField("Email", text: $viewModel.email.value)
                                     .padding()
+                                    .textInputAutocapitalization(.none)
                             }
                             
-                            InputFieldWithErrorView(field: viewModel.firstName) {
+                            InputFieldWithErrorView(field: viewModel.password) {
                                 PasswordView(password: $viewModel.password.value)
                                     .padding()
+                                    .textInputAutocapitalization(.none)
                             }
                             
                             
@@ -98,6 +100,9 @@ struct SignupView: View {
     }
 }
 
-#Preview {
-    SignupView()
+struct SignupView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignupView()
+            .environmentObject(Coordinator())
+    }
 }

@@ -34,22 +34,9 @@
 		E22E491C2E2E44A300619289 /* my roadmapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "my roadmapUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		E2CAF5392E3A4F3D009423B5 /* Exceptions for "my roadmap" folder in "my roadmap" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"my-roadmap-Info.plist",
-			);
-			target = E22E49042E2E44A100619289 /* my roadmap */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E22E49072E2E44A100619289 /* my roadmap */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				E2CAF5392E3A4F3D009423B5 /* Exceptions for "my roadmap" folder in "my roadmap" target */,
-			);
 			path = "my roadmap";
 			sourceTree = "<group>";
 		};
