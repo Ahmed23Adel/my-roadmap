@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject var viewModel = HomeViewModel()
     @EnvironmentObject var coordinator: Coordinator
     var body: some View {
-        Text("Home viewHomeView")
+        Text("home")
     }
 }
 
