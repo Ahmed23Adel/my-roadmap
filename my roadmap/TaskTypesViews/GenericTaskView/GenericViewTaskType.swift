@@ -24,12 +24,12 @@ struct GenericViewTaskType: View {
         ZStack{ //START ZSTACK
             Image("texture")
                 .resizable()
-                .frame(width: 200, height: 100)
+                .frame(width: DrawableConstants.width, height: DrawableConstants.height)
                 .cornerRadius(20)
             
             RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
                 .stroke(lineWidth: 15)
-                .frame(width: 200, height: 100)
+                .frame(width: DrawableConstants.width, height: DrawableConstants.height)
                 .foregroundColor(.green)
                 .clipShape(
                     RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
@@ -56,7 +56,7 @@ struct GenericViewTaskType: View {
                
             
         } //END ZSTACK
-        .frame(width: 220, height: 120)
+        .frame(width: DrawableConstants.width + DrawableConstants.margin, height: DrawableConstants.height + DrawableConstants.margin)
         .shadow(color: .black.opacity(0.3), radius: 10, x: -3, y: 3)
         
     }

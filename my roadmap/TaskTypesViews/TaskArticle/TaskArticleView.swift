@@ -40,7 +40,6 @@ struct PreviewContentTaskArticle: View {
             var futureDate: Date {
                 return Calendar.current.date(byAdding: .day, value: 10, to: Date())!
             }
-            let startDate = pastDate
             let taskArticle = try TaskArticle.createInProgressArticle(
                 articleName: "How to learn iOS", linkToArticle: "https://google.com", title: "Learn this", progress: 20, expectedStartDate: futureDate, startDate: pastDate, expectedDeadline: futureDate, taskStatus: .inProgress)
             

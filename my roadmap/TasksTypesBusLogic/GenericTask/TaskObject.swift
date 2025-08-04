@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import Combine
 
 class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable {
-    
+    var posX: CGFloat
+    var posY: CGFloat
+
     // MARK: - StateLocalSyncTrackable & StateCloudSyncTrackable properties
     var localIsChanged: Bool = false
     var localIsSynedWithFilesDirectory: Bool = true
@@ -47,6 +50,8 @@ class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable 
         self.expectedDeadline = expectedDeadline
         self.taskStatus = taskStatus
         
+        posX = 0
+        posY = 0
         // Initialize state based on taskStatus
         switch taskStatus {
         case .notStarted:
@@ -253,6 +258,22 @@ class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable 
 
         
     }
-
+    
+    // MARK: Drawable
+    func calcWidth() -> CGFloat {
+        return DrawableConstants.width
+    }
+    
+    func calcHeight() -> CGFloat {
+        return DrawableConstants.height
+    }
+    
+    func calcMarginedWidth() -> CGFloat {
+        return DrawableConstants.width + DrawableConstants.margin
+    }
+    
+    func calcMarginedHeight() -> CGFloat {
+        return DrawableConstants.height + DrawableConstants.margin
+    }
 
 }

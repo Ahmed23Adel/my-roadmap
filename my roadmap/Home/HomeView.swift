@@ -11,7 +11,28 @@ struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
     @EnvironmentObject var coordinator: Coordinator
     var body: some View {
-        Text("home")
+        ZStack{
+            Image("backgroundgrid")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack{
+                ZStack{
+                    Text(viewModel.getRoadmapName())
+                        .font(.title)
+                        .background(
+                            RoundedRectangle(cornerRadius: 25)
+                                .fill(.ultraThickMaterial)
+                                .blur(radius: 250)
+                        )
+                }
+                
+                RoadmapCanvasView(roadmap: viewModel.getRoadmap())
+                    .padding(15)
+            }
+        }
+        
     }
 }
 

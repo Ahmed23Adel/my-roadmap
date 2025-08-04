@@ -1,32 +1,32 @@
 //
-//  TaskGoalView.swift
+//  DrawableSingleTask.swift
 //  my roadmap
 //
-//  Created by ahmed on 01/08/2025.
+//  Created by ahmed on 03/08/2025.
 //
 
 import SwiftUI
 
-struct TaskGoalView: View {
-    var taskGoal: TaskGoal
-    @StateObject var viewModel: TaskGoalViewModel
-    
-    init(taskGoal: TaskGoal) {
-        self.taskGoal = taskGoal
-        self._viewModel = StateObject(wrappedValue: TaskGoalViewModel(taskGoal: taskGoal))
-        
-    }
-    
+struct DrawableSingleTask: View {
+    let singleTask: TaskObject
     var body: some View {
-        GenericViewTaskType(taskBook: viewModel.taskGoal, Tasklabel: viewModel.getLabel(), imgName: viewModel.getImgName())
+        if let taskArticle = singleTask as? TaskArticle {
+            TaskArticleView(taskArticle: taskArticle)
+        } else if let taskBook = singleTask as? TaskBook {
+            TaskBookView(taskBook: taskBook)
+        }else if let taskGoal = singleTask as? TaskGoal {
+            TaskGoalView(taskGoal: taskGoal)
+        } else if let taskYoutube = singleTask as? TaskYoutubePlaylist {
+            TaskYoutubePlaylistView(taskYoutube: taskYoutube)
+        }
     }
 }
 
 #Preview {
-    PreviewContentTaskGoal()
+    PreviewContentDrawable()
 }
 
-struct PreviewContentTaskGoal: View {
+struct PreviewContentDrawable: View {
     var body: some View {
         do {
             var currentDate: Date {

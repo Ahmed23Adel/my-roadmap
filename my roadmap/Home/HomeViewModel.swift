@@ -10,6 +10,13 @@ import Combine
 
 class HomeViewModel: ObservableObject{
     
+    func getRoadmap() -> Roadmap{
+        let roadmap = Roadmap()
+        roadmap.initTestableRoadmap()
+        roadmap.calcEachTaskPosition()
+        return roadmap
+    }
+    
     func getTaskBook() -> TaskBook{
         var currentDate: Date {
             return Date()
@@ -35,5 +42,11 @@ class HomeViewModel: ObservableObject{
             taskStatus: .inProgress
         )
         return taskBook
+    }
+    
+    
+    
+    func getRoadmapName() -> String{
+        "Testable Roadmap"
     }
 }

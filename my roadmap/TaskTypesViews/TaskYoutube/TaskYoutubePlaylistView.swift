@@ -40,7 +40,6 @@ struct PreviewContentTaskYoutube: View {
             var futureDate: Date {
                 return Calendar.current.date(byAdding: .day, value: 10, to: Date())!
             }
-            let startDate = pastDate
             let taskYoutube = try TaskYoutubePlaylist.createInProgressYoutubePlaylist(playlistName: "HTML course", videoCount: 30, numVideosWatched: 10, linkToYoutube: "https://www.youtube.com/watch?v=8q0cyaYtzC4&t=901s", title: "watch this video", progress: 30, expectedStartDate: pastDate, startDate: pastDate, expectedDeadline: futureDate, taskStatus: .inProgress)
             
                 

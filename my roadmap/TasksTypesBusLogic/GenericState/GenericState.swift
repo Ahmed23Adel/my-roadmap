@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import Combine
 /*
     Could be either branch or task
  */
 
-protocol GenericState: AnyObject, Identifiable{
+protocol GenericState: AnyObject, Identifiable, Drawable, ObservableObject{
     var id: UUID { get }
     var type: StateType { get }
     var title: String { get }
