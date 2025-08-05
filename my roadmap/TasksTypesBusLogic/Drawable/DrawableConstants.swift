@@ -12,9 +12,9 @@ final class DrawableConstants{
     static let screenWidth = UIScreen.main.bounds.width
    static let screenHeight = UIScreen.main.bounds.height
     
-    static let width: CGFloat = 200
+    static let width: CGFloat = 170
     static let height: CGFloat = 100
-    static let margin: CGFloat = 20
+    static let margin: CGFloat = 40
     
     static let startRoadmapX: CGFloat = (0.70) * screenWidth
     static let startRoadmapY: CGFloat = 35

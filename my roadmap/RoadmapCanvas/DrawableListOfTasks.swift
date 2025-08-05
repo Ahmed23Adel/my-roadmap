@@ -11,17 +11,25 @@ struct DrawableListOfTasks: View {
     let listOfTasks: ListOfTasks
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            // List title header
+        ZStack {
+            VStack(alignment: .leading, spacing: 10) {                
+                // Display all tasks in the list vertically
+                ForEach(listOfTasks.tasks, id: \.id) { task in
+                    DrawableSingleTask(singleTask: task)
+                    
+                }
+            }
+            .padding()
             
-            // Display all tasks in the list vertically
-            ForEach(listOfTasks.tasks, id: \.id) { task in
-                DrawableSingleTask(singleTask: task)
+            // Draw arrows between consecutive tasks
+            ForEach(0..<Int(listOfTasks.tasks.count)-1, id: \.self) { index in
+                let currentTask = listOfTasks.tasks[index]
+                let nextTask = listOfTasks.tasks[index + 1]
+                ArrowLineView(start: CGPointMake(currentTask.posX, currentTask.posY), end: CGPointMake(nextTask.posX, nextTask.posY))
             }
         }
-        .padding()
-        .position(x: listOfTasks.posX + listOfTasks.calcWidth()/2,
-                 y: listOfTasks.posY + listOfTasks.calcHeight()/2)
+//        .position(x: listOfTasks.posX + listOfTasks.calcWidth()/2,
+//                 y: listOfTasks.posY + listOfTasks.calcHeight()/2)
     }
 }
 

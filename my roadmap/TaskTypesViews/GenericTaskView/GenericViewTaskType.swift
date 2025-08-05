@@ -39,6 +39,7 @@ struct GenericViewTaskType: View {
             VStack{ //START VSTACK for bookicon
                 HStack{ //START HStack for bookicon
                     
+//                    Text(" \(Int(taskBook.posX)) \(Int(taskBook.posY))")
                     Text(Tasklabel)
                         .foregroundColor(Color(red: 0.1, green: 0.2, blue: 0.4))
                         .font(.title2)

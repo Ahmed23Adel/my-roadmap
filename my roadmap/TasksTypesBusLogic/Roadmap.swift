@@ -85,27 +85,26 @@ class Roadmap: ObservableObject{
                 let totalWidth = list1Width + DrawableConstants.margin + list2Width
                 let centerOffset = totalWidth / 2
                 
-                // Position List1 (left side of center)
-                // it calcualtes the top left position of the object
-                let list1StartX = curX - centerOffset
+                // FIXED: Position List1 (left side of center) - add half width for center positioning
+                let list1StartX = curX - centerOffset + DrawableConstants.width/2
                 calcListOfTasks(listOfTasks: listOfTasks1, startX: list1StartX, startY: curY)
                 
-                // Position List2 (right side of center)
-                let list2StartX = curX - centerOffset + list1Width + DrawableConstants.margin
+                // FIXED: Position List2 (right side of center) - add half width for center positioning
+                let list2StartX = curX - centerOffset + list1Width + DrawableConstants.margin + DrawableConstants.width/2
                 calcListOfTasks(listOfTasks: listOfTasks2, startX: list2StartX, startY: curY)
                 
-                curY += branchHeight + DrawableConstants.margin * 4
+                curY += branchHeight + DrawableConstants.margin 
                 
             } else {
-                // Position single task at current location
+                // FIXED: Position single task - add half height for center positioning
                 singleTask.posX = curX
-                singleTask.posY = curY
+                singleTask.posY = curY + DrawableConstants.height/2
                 
                 curY += singleTask.calcHeight() + DrawableConstants.margin
             }
         }
     }
-    
+
     private func calcListOfTasks(listOfTasks: ListOfTasks, startX: CGFloat, startY: CGFloat) {
         var curY = startY
         
@@ -113,15 +112,15 @@ class Roadmap: ObservableObject{
         listOfTasks.posX = startX
         listOfTasks.posY = startY
         
-        // Position all tasks in the list vertically
+        // FIXED: Position all tasks with center positioning in mind
         for singleTask in listOfTasks.tasks {
-            singleTask.posX = startX
-            singleTask.posY = curY
+            singleTask.posX = startX  // X is already adjusted for center in the caller
+            singleTask.posY = curY + DrawableConstants.height/2  // Add half height for center positioning
             
             curY += singleTask.calcHeight() + DrawableConstants.margin
         }
     }
-    
+ 
     
     
 
