@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class TaskArticle: TaskObject, JsonExtractor{
+final class TaskArticle: TaskObject{
     
     // MARK: - TaskArticle properties
     private(set) var articleName: String{
@@ -153,7 +153,7 @@ final class TaskArticle: TaskObject, JsonExtractor{
     }
     
     // MARK: - Json Extractor
-    func getJson() -> String {
+    override func getJson() -> String {
         let dateFormatter = ISO8601DateFormatter()
         //Any mean any value basic values(int, dboule..) or class instances.
         let jsonDict: [String: Any?] = [

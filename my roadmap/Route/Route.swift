@@ -12,4 +12,5 @@ enum Route{
     case signup
     case settings
     case login
+    case addNewRoadmap
 }

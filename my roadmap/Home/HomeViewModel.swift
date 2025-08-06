@@ -9,7 +9,11 @@ import Foundation
 import Combine
 
 class HomeViewModel: ObservableObject{
+    var coordinator: Coordinator?
     
+    func setCoordinator(coordinator: Coordinator){
+        self.coordinator = coordinator
+    }
     func getRoadmap() -> Roadmap{
         let roadmap = Roadmap()
         roadmap.initTestableRoadmap()
@@ -48,5 +52,10 @@ class HomeViewModel: ObservableObject{
     
     func getRoadmapName() -> String{
         "Testable Roadmap"
+    }
+    
+    func navigateToAddNewRoadmap(){
+        print("coordinator?.navigateTo(.addNewRoadmap)")
+        coordinator?.navigateTo(.addNewRoadmap)
     }
 }

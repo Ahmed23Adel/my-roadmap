@@ -60,7 +60,7 @@ struct RoadmapCanvasView: View {
             }
             .frame(width: DrawableConstants.canvasWidth, height: DrawableConstants.canvasHeight)
         }
-        .ignoresSafeArea()
+//        .ignoresSafeArertea()
     }
     @ViewBuilder
     private func drawRoadmapArrows() -> some View {

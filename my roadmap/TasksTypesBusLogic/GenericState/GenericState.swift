@@ -11,7 +11,7 @@ import Combine
     Could be either branch or task
  */
 
-protocol GenericState: AnyObject, Identifiable, Drawable, ObservableObject{
+protocol GenericState: AnyObject, Identifiable, ObservableObject, Drawable, JsonExtractor{
     var id: UUID { get }
     var type: StateType { get }
     var title: String { get }

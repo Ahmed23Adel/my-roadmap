@@ -8,7 +8,9 @@
 import Foundation
 import Combine
 
-class Roadmap: ObservableObject{
+class Roadmap: ObservableObject, JsonExtractor{
+    
+    
     @Published private(set) var roadmap: [any GenericState] = []
     
     var count: Int{
@@ -123,6 +125,23 @@ class Roadmap: ObservableObject{
  
     
     
-
+    
+    func getJson() -> String {
+        var taskJsons: [String] = []
+        
+        for singleTask in roadmap {
+            let jsonForTask = singleTask.getJson()
+            taskJsons.append(jsonForTask)
+        }
+        
+        // Join all task JSONs with commas and wrap in array brackets
+        let roadmapArrayJson = "[" + taskJsons.joined(separator: ",") + "]"
+        
+        return roadmapArrayJson
+    }
+    
+    func append(_ singleTask: any GenericState){
+        self.roadmap.append(singleTask)
+    }
     
 }

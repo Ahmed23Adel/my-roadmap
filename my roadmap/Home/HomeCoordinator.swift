@@ -16,6 +16,8 @@ struct HomeCoordinator: View {
                     switch route {
                     case .settings:
                         EditProfileView()
+                    case .addNewRoadmap:
+                        AddNewRoadmapCoordinatorView()
                     default:
                         EmptyView()
                     }

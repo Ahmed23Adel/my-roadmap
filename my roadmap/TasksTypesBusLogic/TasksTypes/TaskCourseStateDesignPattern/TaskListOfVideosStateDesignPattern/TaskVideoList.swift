@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class TaskVideoList: TaskObject, JsonExtractor {
+final class TaskVideoList: TaskObject {
     
     // MARK: - TaskVideoList properties
     private(set) var listName: String {
@@ -146,7 +146,7 @@ final class TaskVideoList: TaskObject, JsonExtractor {
     }
     
     // MARK: - Json Extractor
-    func getJson() -> String {
+    override func getJson() -> String {
         let dateFormatter = ISO8601DateFormatter()
         //Any mean any value basic values(int, dboule..) or class instances.
         let jsonDict: [String: Any?] = [

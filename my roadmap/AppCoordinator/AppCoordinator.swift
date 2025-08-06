@@ -40,6 +40,12 @@ struct AppCoordinator: View {
                                 insertion: .move(edge: .trailing).combined(with: .opacity),
                                 removal: .move(edge: .leading).combined(with: .opacity)
                             ))
+                    case .addNewRoadmap:
+                        AddNewRoadmapCoordinatorView()
+                            .transition(.asymmetric(
+                                insertion: .move(edge: .trailing).combined(with: .opacity),
+                                removal: .move(edge: .leading).combined(with: .opacity)
+                            ))
                     }
                 }
                 .animation(.easeInOut(duration: 0.3), value: coordinator.currentRoute)

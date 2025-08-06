@@ -276,4 +276,10 @@ class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable 
         return DrawableConstants.height + DrawableConstants.margin
     }
 
+    
+    // MARK: JsonExtractor
+    // must be implemented in subclases
+    func getJson() -> String {
+        return ""
+    }
 }

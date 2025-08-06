@@ -35,4 +35,15 @@ class ListOfTasks: TaskObject{
         DrawableConstants.width
     }
     
+    // MARK: JsonExtractor
+    override func getJson() -> String {
+        var taskJsons: [String] = []
+        for singleTask in tasks {
+            taskJsons.append(singleTask.getJson())
+        }
+        let tasksArrayJson = "[" + taskJsons.joined(separator: ",") + "]"
+        
+        return tasksArrayJson
+    }
+
 }

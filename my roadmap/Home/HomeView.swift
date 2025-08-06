@@ -29,10 +29,27 @@ struct HomeView: View {
                 }
                 
                 RoadmapCanvasView(roadmap: viewModel.getRoadmap())
-                    .padding(15)
+                    .clipped()
+            }
+            VStack{
+                Spacer()
+                HStack{
+                    Button{
+                        viewModel.navigateToAddNewRoadmap()
+                    } label: {
+                        Image("add")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .padding(.leading, 120)
+                    }
+                     Spacer()
+                }
+                
             }
         }
-        
+        .onAppear{
+            viewModel.setCoordinator(coordinator: coordinator)
+        }
     }
 }
 

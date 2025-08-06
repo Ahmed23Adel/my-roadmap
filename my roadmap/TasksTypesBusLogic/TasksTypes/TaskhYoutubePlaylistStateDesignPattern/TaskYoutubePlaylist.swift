@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class TaskYoutubePlaylist: TaskObject, JsonExtractor {
+final class TaskYoutubePlaylist: TaskObject {
     
     // MARK: - YoutubePlaylist properties
     private(set) var playlistName: String {
@@ -157,7 +157,7 @@ final class TaskYoutubePlaylist: TaskObject, JsonExtractor {
     }
     
     // MARK: - Json Extractor
-    func getJson() -> String {
+    override func getJson() -> String {
         let dateFormatter = ISO8601DateFormatter()
         let jsonDict: [String: Any?] = [
             "id": id.uuidString,

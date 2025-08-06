@@ -13,6 +13,8 @@ enum errorTaskBranch: Error{
 }
 final class TaskBranch: GenericState{
     
+    
+    
     var posX: CGFloat
     var posY: CGFloat
     
@@ -90,5 +92,30 @@ final class TaskBranch: GenericState{
         } else {
             return parallelBranches[0].calcMarginedHeight() + parallelBranches[1].calcMarginedHeight() + DrawableConstants.margin
         }
+    }
+    
+    func getJson() -> String {
+        let branch1Str: String = parallelBranches[0].getJson()
+        let branch2Str: String = parallelBranches[0].getJson()
+        
+        let branch1Data = branch1Str.data(using: .utf8)!
+        let branch2Data = branch2Str.data(using: .utf8)!
+        
+        let branch1Object = try! JSONSerialization.jsonObject(with: branch1Data)
+        let branch2Object = try! JSONSerialization.jsonObject(with: branch2Data)
+        
+        let result: [String: Any] = [
+            "type": "branch",
+            "branch1": branch1Object,
+            "branch2": branch2Object
+        ]
+        
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: result, options: []),
+              let jsonString = String(data: jsonData, encoding: .utf8) else {
+            return "{}"
+        }
+        
+        return jsonString
+        
     }
 }

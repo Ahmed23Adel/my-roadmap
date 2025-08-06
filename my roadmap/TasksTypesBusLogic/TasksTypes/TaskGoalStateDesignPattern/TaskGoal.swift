@@ -6,7 +6,7 @@
 //
 
 import Foundation
-final class TaskGoal: TaskObject, JsonExtractor {
+final class TaskGoal: TaskObject {
     
     // MARK: - Goal properties
     private(set) var details: String {
@@ -137,7 +137,7 @@ final class TaskGoal: TaskObject, JsonExtractor {
     }
     
     // MARK: - Json Extractor
-    func getJson() -> String {
+    override func getJson() -> String {
         let dateFormatter = ISO8601DateFormatter()
         let jsonDict: [String: Any?] = [
             "id": id.uuidString,
