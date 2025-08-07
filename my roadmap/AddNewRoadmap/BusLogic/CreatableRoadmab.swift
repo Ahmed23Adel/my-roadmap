@@ -56,4 +56,11 @@ class CreatableRoadmab{
         }
     }
     
+    
+    
+    func getRoadmap() -> Roadmap{
+        roadmap.calcEachTaskPosition()
+        return roadmap
+    }
+    
 }

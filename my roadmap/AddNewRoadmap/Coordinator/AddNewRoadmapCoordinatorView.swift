@@ -12,13 +12,13 @@ struct AddNewRoadmapCoordinatorView: View {
     @EnvironmentObject var mainCoordinator: Coordinator
     
     var body: some View {
-        NavigationStack(path: $addNewRoadmapCoordinator.navigationPath) {
+        NavigationStack(path: $addNewRoadmapCoordinator.navigationPath) { //START NavigationStack
             AddRoadmapStep1NameView()
                 .navigationDestination(for: AddNewRoadmapRoute.self) { route in
                     switch route {
                     // We don't need .nameStep here since NameStepView is already the root
                     case .roadmapStep:
-                        AddRoadmapStep2Roadmap()
+                        AddRoadmapStep2RoadmapView()
                     case .completed:
                         AddRoadmapStep3Completed()
                     case .nameStep:
@@ -35,7 +35,7 @@ struct AddNewRoadmapCoordinatorView: View {
                         }
                     }
                 }
-        }
+        } //END NavigationStack
         .environmentObject(addNewRoadmapCoordinator)
     }
 }

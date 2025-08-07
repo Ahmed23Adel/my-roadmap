@@ -1,0 +1,38 @@
+//
+//  AddRoadmapStep2Roadmap.swift
+//  my roadmap
+//
+//  Created by ahmed on 06/08/2025.
+//
+
+import SwiftUI
+
+struct AddRoadmapStep2RoadmapView: View {
+    @EnvironmentObject private var coordinator: AddNewRoadmapCoordinator
+    @StateObject var viewModel = AddRoadmapStep2RoadmapViewModel()
+    
+    var body: some View {
+        ZStack{
+            TopRightBackButton(backFunc: viewModel.back)
+            VStack{
+                waitingRoadmapCanvas(viewModel: viewModel)
+                ChooseTaskTypeCoordinatorView()
+                    .frame(height: 250)
+            }
+            
+            
+            
+        }
+        .onAppear{
+            viewModel.setCoordinator(coordinator: coordinator)
+        }
+        
+    }
+    
+}
+
+#Preview {
+    let mockCoordinator = AddNewRoadmapCoordinator()
+    return AddRoadmapStep2RoadmapView()
+        .environmentObject(mockCoordinator)
+}

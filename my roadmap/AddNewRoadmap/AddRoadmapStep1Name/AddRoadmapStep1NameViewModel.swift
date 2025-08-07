@@ -26,14 +26,21 @@ class AddRoadmapStep1NameViewModel: ObservableObject{
         if checkDuplicateNames(){
             showErrorAlert()
         } else{
+            updateRoadmap()
             moveToNextStep()
         }
     }
     
     private func moveToNextStep(){
+        
         coordinator?.push(.roadmapStep)
 
     }
+    
+    private func updateRoadmap(){
+        coordinator?.creatableRoadmap.name = name
+    }
+    
     func checkDuplicateNames() -> Bool{
         let duplicateChecker = DuplicateFileNamesChecker()
         return duplicateChecker.isDuplicate(fileName: FileNameCreator().create(fileName: name))

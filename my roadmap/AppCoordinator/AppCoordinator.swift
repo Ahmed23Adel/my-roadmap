@@ -11,11 +11,11 @@ struct AppCoordinator: View {
     @StateObject private var coordinator = Coordinator()
     
     var body: some View {
-        Group {
-            if let _ = configHolder.config {
+        Group { //START: Group
+            if let _ = configHolder.config { //START: Check configHolder
                 // Wrap the switching logic in a transition container
                 Group {
-                    switch coordinator.currentRoute {
+                    switch coordinator.currentRoute { //START: switch
                     case .signup:
                         SignupView()
                             .transition(.asymmetric(
@@ -47,13 +47,12 @@ struct AppCoordinator: View {
                                 removal: .move(edge: .leading).combined(with: .opacity)
                             ))
                     }
-                }
+                }  //END: switch
                 .animation(.easeInOut(duration: 0.3), value: coordinator.currentRoute)
-            } else {
-                ProgressView("Loading...")
-                    .transition(.opacity)
-            }
-        }
+            } else { //START: else Check configHolder
+                FixedProgressView()
+            } //END: else Check configHolder
+        } //End: Group
         .task {
             await configHolder.loadConfig()
         }

@@ -11,6 +11,7 @@ import SwiftUI
 
 class AddNewRoadmapCoordinator: ObservableObject{
     @Published var navigationPath = NavigationPath()
+    @Published var creatableRoadmap = CreatableRoadmab()
 
     
     func push(_ route: AddNewRoadmapRoute){

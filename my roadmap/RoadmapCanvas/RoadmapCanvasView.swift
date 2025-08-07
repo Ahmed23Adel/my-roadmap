@@ -73,43 +73,46 @@ struct RoadmapCanvasView: View {
         }
         
         // Between roadmap items
-        ForEach(0..<roadmap.roadmap.count-1, id: \.self) { index in
-            let current = roadmap.roadmap[index]
-            let next = roadmap.roadmap[index + 1]
+        if roadmap.roadmap.count > 1{
             
-            if current is TaskObject && next is TaskBranch{
-                // Task to branch item
-                let nextBranch = next as! TaskBranch
-                ArrowLineView(
-                    start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2),
-                    end: CGPoint(x: nextBranch.parallelBranches[0].posX, y: nextBranch.parallelBranches[0].posY)
-                )
-                ArrowLineView(
-                    start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2),
-                    end: CGPoint(x: nextBranch.parallelBranches[1].posX, y: nextBranch.parallelBranches[1].posY)
-                )
-            } else if current is TaskBranch && next is TaskObject{
-                let currentBranch = current as! TaskBranch
-                let currentList1LastItem = currentBranch.parallelBranches[0].tasks.last!
-                let currentList2LastItem = currentBranch.parallelBranches[1].tasks.last!
+        
+            ForEach(0..<roadmap.roadmap.count-1, id: \.self) { index in
+                let current = roadmap.roadmap[index]
+                let next = roadmap.roadmap[index + 1]
                 
-                ArrowLineView(
-                    start: CGPoint(x: currentList1LastItem.posX, y: (currentList1LastItem.posY) + DrawableConstants.height/2),
-                    end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.margin*1.5)
-                )
-                
-                ArrowLineView(
-                    start: CGPoint(x: currentList2LastItem.posX, y: (currentList2LastItem.posY) + DrawableConstants.height/2),
-                    end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.margin*1.5)
-                )
-            } else if current is TaskObject && next is TaskObject{
-                
-                ArrowLineView(
-                    start: CGPoint(x: current.posX, y: (current.posY) + DrawableConstants.height/2),
-                    end: CGPoint(x: next.posX, y: next.posY)
-                )
+                if current is TaskObject && next is TaskBranch{
+                    // Task to branch item
+                    let nextBranch = next as! TaskBranch
+                    ArrowLineView(
+                        start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2),
+                        end: CGPoint(x: nextBranch.parallelBranches[0].posX, y: nextBranch.parallelBranches[0].posY)
+                    )
+                    ArrowLineView(
+                        start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2),
+                        end: CGPoint(x: nextBranch.parallelBranches[1].posX, y: nextBranch.parallelBranches[1].posY)
+                    )
+                } else if current is TaskBranch && next is TaskObject{
+                    let currentBranch = current as! TaskBranch
+                    let currentList1LastItem = currentBranch.parallelBranches[0].tasks.last!
+                    let currentList2LastItem = currentBranch.parallelBranches[1].tasks.last!
+                    
+                    ArrowLineView(
+                        start: CGPoint(x: currentList1LastItem.posX, y: (currentList1LastItem.posY) + DrawableConstants.height/2),
+                        end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.margin*1.5)
+                    )
+                    
+                    ArrowLineView(
+                        start: CGPoint(x: currentList2LastItem.posX, y: (currentList2LastItem.posY) + DrawableConstants.height/2),
+                        end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.margin*1.5)
+                    )
+                } else if current is TaskObject && next is TaskObject{
+                    
+                    ArrowLineView(
+                        start: CGPoint(x: current.posX, y: (current.posY) + DrawableConstants.height/2),
+                        end: CGPoint(x: next.posX, y: next.posY)
+                    )
+                }
             }
-            
         }
     }
 }

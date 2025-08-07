@@ -93,7 +93,7 @@ struct PreviewContent: View {
                 expectedDeadline: futureDate,
                 taskStatus: .inProgress
             )
-            return AnyView(GenericViewTaskType(taskBook: taskBook, Tasklabel: taskBook.bookName, imgName: "bookicon"))
+            return AnyView(GenericViewTaskType(taskBook: taskBook, Tasklabel: taskBook.bookName, imgName: "book"))
         } catch {
             return AnyView(Text("Preview Error: \(error.localizedDescription)")
                 .foregroundColor(.red))

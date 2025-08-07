@@ -11,13 +11,13 @@ struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
     @EnvironmentObject var coordinator: Coordinator
     var body: some View {
-        ZStack{
+        ZStack{ // START: ZStack
             Image("backgroundgrid")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack{
+            VStack{ // START: VStack for raodmapCanvas
                 ZStack{
                     Text(viewModel.getRoadmapName())
                         .font(.title)
@@ -30,10 +30,10 @@ struct HomeView: View {
                 
                 RoadmapCanvasView(roadmap: viewModel.getRoadmap())
                     .clipped()
-            }
-            VStack{
+            } // END: VStack for raodmapCanvas
+            VStack{ // START: VStack for add button
                 Spacer()
-                HStack{
+                HStack{ // START: HStack
                     Button{
                         viewModel.navigateToAddNewRoadmap()
                     } label: {
@@ -43,10 +43,10 @@ struct HomeView: View {
                             .padding(.leading, 120)
                     }
                      Spacer()
-                }
+                } // END: HStack
                 
-            }
-        }
+            } // END: VStack for add button
+        }  // END: ZStack
         .onAppear{
             viewModel.setCoordinator(coordinator: coordinator)
         }
