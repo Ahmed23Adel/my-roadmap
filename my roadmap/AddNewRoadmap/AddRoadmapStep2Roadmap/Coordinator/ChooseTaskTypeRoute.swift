@@ -14,4 +14,5 @@ enum ChooseTaskTypeRoute{
     case course
     case youtubPlaylist
     case goal
+    case branch
 }

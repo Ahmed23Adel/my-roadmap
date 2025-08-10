@@ -13,13 +13,13 @@ struct AddRoadmapStep2RoadmapView: View {
     
     var body: some View {
         ZStack{
-            TopRightBackButton(backFunc: viewModel.back)
+            
             VStack{
                 waitingRoadmapCanvas(viewModel: viewModel)
                 ChooseTaskTypeCoordinatorView()
                     .frame(height: 250)
             }
-            
+            TopRightBackButton(backFunc: viewModel.back)
             
             
         }

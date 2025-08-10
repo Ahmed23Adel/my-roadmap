@@ -20,7 +20,8 @@ class AddRoadmapStep2RoadmapViewModel: ObservableObject{
     
     
     func back(){
-        
+        print("back")
+        coordinator?.creatableRoadmap.pop()
     }
     
     var isCoordinatorSet: Bool {

@@ -1,0 +1,52 @@
+//
+//  TaskTypeCourseEditorViewModel.swift
+//  my roadmap
+//
+//  Created by ahmed on 10/08/2025.
+//
+
+import Foundation
+import Combine
+
+class TaskTypeGoalEditorViewModel: ObservableObject{
+    private var mainCoordinator: AddNewRoadmapCoordinator?
+    private var chooseTaskTypeCoordinator: ChooseTaskTypeCoordinator?
+    
+    @Published var taskTitle: String = ""
+    @Published var details: String = ""
+    @Published var expectedStartDate: Date = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
+    @Published var expectedDeadline: Date = Calendar.current.date(byAdding: .day, value: 7, to: Date()) ?? Date()
+    
+    @Published var showError = false
+    @Published var errorMsg = ""
+    
+    func setMainCoordinator(coordinator: AddNewRoadmapCoordinator){
+        self.mainCoordinator = coordinator
+    }
+    
+    func setSubCoordinator(coordinator: ChooseTaskTypeCoordinator){
+        self.chooseTaskTypeCoordinator = coordinator
+    }
+    
+    func isFormValid()-> Bool{
+        !taskTitle.isEmpty && !details.isEmpty 
+    }
+    
+    func addTask(){
+        do {
+            let newTask = try TaskGoal.createNotStartedGoal(
+                details: details,
+                imageLink: nil,
+                title: taskTitle,
+                expectedStartDate: expectedStartDate,
+                expectedDeadline: expectedDeadline)
+            mainCoordinator?.creatableRoadmap.appendTask(newTask)
+            chooseTaskTypeCoordinator?.navigateTo(.chooseType)
+        } catch {
+            errorMsg = "Error occured while adding task. \(error)"
+            showError = true
+        }
+        
+        
+    }
+}
