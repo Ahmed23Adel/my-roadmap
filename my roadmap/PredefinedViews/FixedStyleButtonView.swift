@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct FixedStyleButtonView: View {
+    var isDisabled: Bool
+    var function: () -> Void = {}
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        FixedStyleButtonViewGeneric(isDisabled: isDisabled, title: "Submit", function: function)
     }
 }
-
 #Preview {
-    FixedStyleButtonView()
+    FixedStyleButtonView(isDisabled: false) {
+        print("Button tapped!")
+    }
 }

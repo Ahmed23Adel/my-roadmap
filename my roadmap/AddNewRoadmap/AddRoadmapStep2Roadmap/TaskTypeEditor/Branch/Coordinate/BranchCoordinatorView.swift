@@ -1,54 +1,37 @@
 //
-//  ChooseTaskTypeCoordinator.swift
+//  BranchCoordinatorView.swift
 //  my roadmap
 //
-//  Created by ahmed on 07/08/2025.
+//  Created by ahmed on 10/08/2025.
 //
 
 import SwiftUI
 
-struct ChooseTaskTypeCoordinatorView: View {
-    @ObservedObject var coordinator = ChooseTaskTypeCoordinator()
+
+struct BranchCoordinatorView: View {
+    @ObservedObject var coordinator = BranchCoordinator()
+    
     var body: some View {
         Group{
             switch coordinator.currentRoute { //START: switch
+            case .taskTypeBranch:
+                TaskTypeBranchEditorView(tasksList1: $coordinator.tasksList1, tasksList2: $coordinator.tasksList2)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                        removal: .move(edge: .leading).combined(with: .opacity)
+                    ))
             case .chooseType:
-                ChooseTaskTypeView()
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing).combined(with: .opacity),
-                        removal: .move(edge: .leading).combined(with: .opacity)
-                    ))
-            case .book:
-                TaskTypeBookEditorView()
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing).combined(with: .opacity),
-                        removal: .move(edge: .leading).combined(with: .opacity)
-                    ))
-            case .youtubPlaylist:
-                TaskTypeYoutubeEditorView()
+                BranchChooseTaskTypeView()
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .move(edge: .leading).combined(with: .opacity)
                     ))
             case .article:
-                TaskTypeArticleEditorView()
+                BranchTaskTypeArticleEditorView(tasksList1: $coordinator.tasksList1, tasksList2: $coordinator.tasksList2)
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .move(edge: .leading).combined(with: .opacity)
                     ))
-            case .goal:
-                TaskTypeGoalEditorView()
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing).combined(with: .opacity),
-                        removal: .move(edge: .leading).combined(with: .opacity)
-                    ))
-            case .branch:
-                BranchCoordinatorView()
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing).combined(with: .opacity),
-                        removal: .move(edge: .leading).combined(with: .opacity)
-                    ))
-            
             default:
                 EmptyView()
             }
@@ -70,5 +53,5 @@ struct ChooseTaskTypeCoordinatorView: View {
     }
 }
 #Preview {
-    ChooseTaskTypeCoordinatorView()
+    BranchCoordinatorView()
 }

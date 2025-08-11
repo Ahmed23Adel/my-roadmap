@@ -20,6 +20,6 @@ class TaskBookViewModel: ObservableObject, GenericTaskType{
     }
     
     func getImgName() -> String {
-        "bookicon"
+        "book"
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class CreatableRoadmab{
     @Published var name = ""
@@ -15,8 +16,12 @@ class CreatableRoadmab{
     private var branch: TaskBranch?
     private var lastNumListsInLastBranch = 0
     
-    func appendTask(_ singleTask: TaskObject){
-        roadmap.append(singleTask)
+    func appendTask(_ singleTask: any GenericState){
+        withAnimation{
+            roadmap.append(singleTask)
+        }
+        
+        roadmap.calcEachTaskPosition()
     }
     
     func initBranch(title: String){
@@ -63,4 +68,11 @@ class CreatableRoadmab{
         return roadmap
     }
     
+    func pop(){
+        withAnimation{
+            roadmap.pop()
+        }
+        
+        roadmap.calcEachTaskPosition()
+    }
 }

@@ -19,6 +19,10 @@ struct TaskArticleView: View {
     
     var body: some View {
         GenericViewTaskType(taskBook: viewModel.taskArticle, Tasklabel: viewModel.getLabel(), imgName: viewModel.getImgName())
+            .transition(.asymmetric(
+                insertion: .move(edge: .trailing).combined(with: .opacity),
+                removal: .move(edge: .leading).combined(with: .opacity)
+            ))
     }
 }
 

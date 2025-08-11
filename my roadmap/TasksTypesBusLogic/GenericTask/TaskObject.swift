@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable {
+class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable, Hashable {
     var posX: CGFloat
     var posY: CGFloat
 
@@ -281,5 +281,17 @@ class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable 
     // must be implemented in subclases
     func getJson() -> String {
         return ""
+    }
+    
+    // MARK: - Hashable Conformance
+        
+    // Equatable conformance (required by Hashable)
+    static func == (lhs: TaskObject, rhs: TaskObject) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    // Hashable conformance
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

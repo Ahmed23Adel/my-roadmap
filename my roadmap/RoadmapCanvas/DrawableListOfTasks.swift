@@ -80,9 +80,9 @@ struct PreviewContentDrawableList: View {
                 expectedDeadline: futureDate
             )
             
-            listOfTasks.addTask(task1)
-            listOfTasks.addTask(task2)
-            listOfTasks.addTask(task3)
+            listOfTasks.append(task1)
+            listOfTasks.append(task2)
+            listOfTasks.append(task3)
             
             // Set some positions for preview
             listOfTasks.posX = 50

@@ -39,12 +39,12 @@ class Roadmap: ObservableObject, JsonExtractor{
         
         
         let listTasks1 = ListOfTasks(title: "First List")
-        try! listTasks1.addTask(TaskArticle.createNotStartedArticle(articleName: "learn iOS", linkToArticle: "https://google.com", title: "learn this", expectedStartDate: futureDate, expectedDeadline: futureDate))
-        try! listTasks1.addTask(TaskArticle.createNotStartedArticle(articleName: "learn Android", linkToArticle: "https://google.com", title: "learn this", expectedStartDate: futureDate, expectedDeadline: futureDate))
+        try! listTasks1.append(TaskArticle.createNotStartedArticle(articleName: "learn iOS", linkToArticle: "https://google.com", title: "learn this", expectedStartDate: futureDate, expectedDeadline: futureDate))
+        try! listTasks1.append(TaskArticle.createNotStartedArticle(articleName: "learn Android", linkToArticle: "https://google.com", title: "learn this", expectedStartDate: futureDate, expectedDeadline: futureDate))
         
         
         let listTasks2 = ListOfTasks(title: "Second List")
-        try! listTasks2.addTask(TaskArticle.createNotStartedArticle(articleName: "learn web", linkToArticle: "https://google.com", title: "learn this", expectedStartDate: futureDate, expectedDeadline: futureDate))
+        try! listTasks2.append(TaskArticle.createNotStartedArticle(articleName: "learn web", linkToArticle: "https://google.com", title: "learn this", expectedStartDate: futureDate, expectedDeadline: futureDate))
         
         let branch = TaskBranch(title: "branch")
         try! branch.addBranch(branch: listTasks1)
@@ -142,6 +142,13 @@ class Roadmap: ObservableObject, JsonExtractor{
     
     func append(_ singleTask: any GenericState){
         self.roadmap.append(singleTask)
+    }
+    
+    
+    func pop(){
+        if self.roadmap.count > 0 {
+            self.roadmap.removeLast()
+        }
     }
     
 }
