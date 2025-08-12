@@ -7,13 +7,14 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class TaskTypeBranchEditorViewModel: ObservableObject{
     private var mainCoordinator: AddNewRoadmapCoordinator?
     private var chooseTaskTypeCoordinator: ChooseTaskTypeCoordinator?
     private var branchCoordinator: BranchCoordinator?
     
-    @Published var taskTitle: String = ""
+    @Published var taskTitle: String = "FixedTitle"
     @Published var list1Title: String = ""
     @Published var list2Title: String = ""
     
@@ -34,28 +35,27 @@ class TaskTypeBranchEditorViewModel: ObservableObject{
     }
     
     func addTask(){
-        do {
-            let branch = TaskBranch(title: taskTitle)
-            
-            
-            
-//            try branch.addBranch(branch: listOfTasks1)
-//            try branch.addBranch(branch: listOfTasks2)
-//            mainCoordinator?.creatableRoadmap.initBranch(title: taskTitle)
-//            mainCoordinator?.creatableRoadmap.addListOfTasks(listOfTasks1)
-//            mainCoordinator?.creatableRoadmap.addListOfTasks(listOfTasks2)
-//            mainCoordinator?.creatableRoadmap.finishBranch()
-            
+        print("h1")
+        if validateInputs(){
+            print("h2")
+            mainCoordinator?.creatableRoadmap.initBranch(title: taskTitle)
+            mainCoordinator?.creatableRoadmap.addListOfTasks(branchCoordinator!.tasksList1)
+            mainCoordinator?.creatableRoadmap.addListOfTasks(branchCoordinator!.tasksList2)
+            mainCoordinator?.creatableRoadmap.finishBranch()
             chooseTaskTypeCoordinator?.navigateTo(.chooseType)
-        } catch {
-            errorMsg = "Error occured while adding task. \(error)"
-            showError = true
+        } else{
+            print("h3")
+            showErrorAlert()
         }
+        
         
         
     }
     
     
+    func validateInputs()->Bool{
+        return !branchCoordinator!.tasksList1.isEmpty && !branchCoordinator!.tasksList2.isEmpty
+    }
     func isDisabled()->Bool{
         return false
     }
@@ -71,7 +71,9 @@ class TaskTypeBranchEditorViewModel: ObservableObject{
     }
     
     func isDisabledGlobal() -> Bool {
+        print("isDisabledGlobal1")
         guard let coordinator = branchCoordinator else { return true }
+        print("isDisabledGlobal2")
         return coordinator.tasksList1.isEmpty || coordinator.tasksList2.isEmpty || taskTitle.isEmpty
     }
     
@@ -80,5 +82,8 @@ class TaskTypeBranchEditorViewModel: ObservableObject{
     }
     
     
-    
+    func showErrorAlert(){
+        showError = true
+        errorMsg = "Each branch must have at least one task"
+    }
 }

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class CreatableRoadmab{
+class CreatableRoadmab: ObservableObject{
     @Published var name = ""
     @Published var roadmap = Roadmap()
     private var isBranchInitialized: Bool = false
@@ -41,13 +41,16 @@ class CreatableRoadmab{
     }
     
     func finishBranch(){
-        roadmap.append(branch!)
+        withAnimation{
+            roadmap.append(branch!)
+        }
         flushOldBranch()
+        roadmap.calcEachTaskPosition()
         
     }
     
     func flushOldBranch(){
-        branch = nil
+//        branch = nil
         lastNumListsInLastBranch = 0
     }
     

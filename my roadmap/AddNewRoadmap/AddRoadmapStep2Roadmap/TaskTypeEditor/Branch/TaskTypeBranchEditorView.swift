@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct TaskTypeBranchEditorView: View {
+    @EnvironmentObject private var mainCoordinator: AddNewRoadmapCoordinator
     @EnvironmentObject var branchCoordinator: BranchCoordinator
     @EnvironmentObject private var choseTaskType: ChooseTaskTypeCoordinator
+    
     
     @Binding var tasksList1: ListOfTasks
     @Binding var tasksList2: ListOfTasks
@@ -52,7 +54,6 @@ struct TaskTypeBranchEditorView: View {
                     viewModel.addTask()
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(viewModel.isDisabledGlobal())
                 .frame(width: 150, height: 60)
                 .controlSize(.large)
                 .tint(Color.green)
@@ -70,6 +71,14 @@ struct TaskTypeBranchEditorView: View {
         .onAppear{
             viewModel.setChooseTaskTypeCoordinator(coordinator: choseTaskType)
             viewModel.setBranchCoordinator(coordinator: branchCoordinator)
+            viewModel.setMainCoordinator(coordinator: mainCoordinator)
+        }
+        .alert(isPresented: $viewModel.showError){
+            Alert(
+                title: Text("Error"),
+                message: Text(viewModel.errorMsg),
+                dismissButton: .default(Text("Ok"))
+            )
         }
     }
 }

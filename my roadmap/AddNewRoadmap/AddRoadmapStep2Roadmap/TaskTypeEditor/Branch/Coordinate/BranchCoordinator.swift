@@ -35,6 +35,8 @@ class BranchCoordinator: ObservableObject{
             navigateTo(.course)
         case .goal:
             navigateTo(.goal)
+        case .youtubPlaylist:
+            navigateTo(.youtubPlaylist)
         default:
             print("")
         }

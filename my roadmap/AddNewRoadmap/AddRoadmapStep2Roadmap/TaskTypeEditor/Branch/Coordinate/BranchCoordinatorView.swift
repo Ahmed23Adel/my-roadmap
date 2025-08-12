@@ -32,6 +32,24 @@ struct BranchCoordinatorView: View {
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .move(edge: .leading).combined(with: .opacity)
                     ))
+            case .book:
+                BranchTaskTypeBookEditorView(tasksList1: $coordinator.tasksList1, tasksList2: $coordinator.tasksList2)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                        removal: .move(edge: .leading).combined(with: .opacity)
+                    ))
+            case .youtubPlaylist:
+                BranchTaskTypeYoutubeEditorView(tasksList1: $coordinator.tasksList1, tasksList2: $coordinator.tasksList2)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                        removal: .move(edge: .leading).combined(with: .opacity)
+                    ))
+            case .goal:
+                BranchTaskTypeGoalEditorView(tasksList1: $coordinator.tasksList1, tasksList2: $coordinator.tasksList2)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                        removal: .move(edge: .leading).combined(with: .opacity)
+                    ))
             default:
                 EmptyView()
             }
