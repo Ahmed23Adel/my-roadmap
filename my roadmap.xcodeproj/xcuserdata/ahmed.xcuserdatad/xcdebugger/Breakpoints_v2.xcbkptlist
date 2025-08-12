@@ -23,52 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E361C657-5DF0-4FAD-9141-3817B3D484CD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "my roadmap/AddNewRoadmap/BusLogic/CreatableRoadmab.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "finishBranch()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E361C657-5DF0-4FAD-9141-3817B3D484CD - facc8472f6ec8742"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "my_roadmap.CreatableRoadmab.finishBranch() -&gt; ()"
-                  moduleName = "my roadmap.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ahmed/Documents/iOS-learn/my%20roadmap/my%20roadmap/AddNewRoadmap/BusLogic/CreatableRoadmab.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44">
-               </Location>
-               <Location
-                  uuid = "E361C657-5DF0-4FAD-9141-3817B3D484CD - 4997a600a250875e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in my_roadmap.CreatableRoadmab.finishBranch() -&gt; ()"
-                  moduleName = "my roadmap.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ahmed/Documents/iOS-learn/my%20roadmap/my%20roadmap/AddNewRoadmap/BusLogic/CreatableRoadmab.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "18B1D242-B626-4A36-9431-0F36309C049A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -79,38 +33,6 @@
             startingLineNumber = "40"
             endingLineNumber = "40"
             landmarkName = "addTask()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DAB6516F-CACD-4518-A2C6-AFF9CA10208C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "my roadmap/AddNewRoadmap/BusLogic/CreatableRoadmab.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "finishBranch()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0AC52E4B-607B-4E04-9503-35CE1E5F28D1"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "my roadmap/AddNewRoadmap/BusLogic/CreatableRoadmab.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "finishBranch()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

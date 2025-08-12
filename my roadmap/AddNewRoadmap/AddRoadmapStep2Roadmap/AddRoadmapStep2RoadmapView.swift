@@ -19,7 +19,14 @@ struct AddRoadmapStep2RoadmapView: View {
                 ChooseTaskTypeCoordinatorView()
                     .frame(height: 250)
             }
-            TopRightBackButton(backFunc: viewModel.back)
+            HStack{
+                Spacer()
+                TopRightGenericButton(imgName: "save", backFunc: viewModel.save)
+                TopRightBackButton(backFunc: viewModel.back)
+                
+
+            }
+            
             
             
         }

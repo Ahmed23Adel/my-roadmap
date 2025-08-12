@@ -8,8 +8,32 @@
 import SwiftUI
 
 struct AddRoadmapStep3Completed: View {
+    @EnvironmentObject var coordinator: Coordinator
+    @State private var isVisible = false
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Image("completed")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 150)
+                .padding()
+            Text("Completed")
+                .font(.headline)
+        }
+        .opacity(isVisible ? 1 : 0)
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+        .onAppear{
+            withAnimation(.easeInOut(duration: 0.5)){
+                isVisible = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                coordinator.navigateTo(.home)
+            }
+            
+        }
+        
+        
     }
 }
 

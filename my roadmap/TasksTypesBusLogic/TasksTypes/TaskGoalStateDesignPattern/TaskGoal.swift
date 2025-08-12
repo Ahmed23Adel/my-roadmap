@@ -141,7 +141,7 @@ final class TaskGoal: TaskObject {
         let dateFormatter = ISO8601DateFormatter()
         let jsonDict: [String: Any?] = [
             "id": id.uuidString,
-            "type": "\(type)",
+            "type": "goal",
             "title": title,
             "progress": progress,
             "expectedStartDate": expectedStartDate.map { dateFormatter.string(from: $0) },

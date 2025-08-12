@@ -150,7 +150,7 @@ final class TaskBook: TaskObject{
         //Any mean any value basic values(int, dboule..) or class instances.
         let jsonDict: [String: Any?] = [
             "id": id.uuidString,
-            "type": "\(type)",
+            "type": "book",
             "title": title,
             "progress": progress,
             "expectedStartDate": expectedStartDate.map { dateFormatter.string(from: $0) },

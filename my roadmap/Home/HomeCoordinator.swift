@@ -23,6 +23,7 @@ struct HomeCoordinator: View {
                     }
                 }
         }
+        
     }
 }
 
