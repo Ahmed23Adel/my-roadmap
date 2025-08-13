@@ -23,16 +23,10 @@ struct AppCoordinator: View {
                                 removal: .move(edge: .leading).combined(with: .opacity)
                             ))
                     case .home:
-                        HomeCoordinator()
+                        HomeCoordinatorView()
                             .transition(.asymmetric(
                                 insertion: .move(edge: .trailing).combined(with: .opacity),
                                 removal: .move(edge: .leading).combined(with: .opacity)
-                            ))
-                    case .settings:
-                        SettingsView()
-                            .transition(.asymmetric(
-                                insertion: .move(edge: .bottom).combined(with: .opacity),
-                                removal: .move(edge: .top).combined(with: .opacity)
                             ))
                     case .login:
                         LoginView()

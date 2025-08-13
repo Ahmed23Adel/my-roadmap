@@ -16,6 +16,7 @@ class CreatableRoadmab: ObservableObject{
     private var branch: TaskBranch?
     private var lastNumListsInLastBranch = 0
     
+    @AppStorage(GlobalConstants.selectedRoadmapKey) private var defaultRoadmapName: String = ""
     func appendTask(_ singleTask: any GenericState){
         withAnimation{
             roadmap.append(singleTask)
@@ -56,8 +57,8 @@ class CreatableRoadmab: ObservableObject{
     
     func save(){
         let roadmapString = roadmap.getJson()
-        print("roadmapString", roadmapString)
         let jsonSaver = try! LocalJsonFileSaver(fileName: FileNameCreator().create(fileName: name))
+        setDefaultRoadmap()
         do{
             try jsonSaver.save(jsonString: roadmapString)
         } catch {
@@ -78,5 +79,12 @@ class CreatableRoadmab: ObservableObject{
         }
         
         roadmap.calcEachTaskPosition()
+    }
+    
+    private func setDefaultRoadmap(){
+        if defaultRoadmapName.isEmpty{
+            defaultRoadmapName = name
+        }
+        print("Default now", defaultRoadmapName)
     }
 }

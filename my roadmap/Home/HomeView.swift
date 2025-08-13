@@ -9,7 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
-    @EnvironmentObject var coordinator: Coordinator
+    @EnvironmentObject var mainCoordinator: Coordinator
+    @EnvironmentObject var homeCoordinator: HomeCoordinator
     var body: some View {
         ZStack{ // START: ZStack
             Image("backgroundgrid")
@@ -42,17 +43,31 @@ struct HomeView: View {
                             .frame(width: 50, height: 50)
                             .padding(.leading, 120)
                     }
-                     Spacer()
+                    Spacer()
+                    Button{
+                        viewModel.navigateToSettings()
+                    } label: {
+                        Image("settings")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .padding(.trailing, 120)
+                    }
+                    
+                    
+                     
+                    
                 } // END: HStack
                 
             } // END: VStack for add button
         }  // END: ZStack
         .onAppear{
-            viewModel.setCoordinator(coordinator: coordinator)
+            viewModel.setMainCoordinator(coordinator: mainCoordinator)
+            viewModel.setHomeCoordinator(coordinator: homeCoordinator)
         }
     }
 }
 
 #Preview {
     HomeView()
+        .environmentObject(Coordinator())
 }

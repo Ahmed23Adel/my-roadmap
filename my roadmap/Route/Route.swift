@@ -10,7 +10,6 @@ import Foundation
 enum Route{
     case home
     case signup
-    case settings
     case login
     case addNewRoadmap
 }
