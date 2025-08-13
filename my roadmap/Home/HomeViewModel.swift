@@ -11,6 +11,12 @@ import Combine
 class HomeViewModel: ObservableObject{
     var mainCoordinator: Coordinator?
     var homeCoordinator: HomeCoordinator?
+    @Published private var roadmap: Roadmap
+    
+    init(){
+        let defaultRoadmapReader = DefaultRoadmapReader()
+        roadmap = defaultRoadmapReader.read()
+    }
     
     func setMainCoordinator(coordinator: Coordinator){
         self.mainCoordinator = coordinator
@@ -19,10 +25,14 @@ class HomeViewModel: ObservableObject{
     func setHomeCoordinator(coordinator: HomeCoordinator){
         self.homeCoordinator = coordinator
     }
+    
     func getRoadmap() -> Roadmap{
-        let roadmap = Roadmap()
-        roadmap.initTestableRoadmap()
+//        let roadmap = Roadmap()
+//        roadmap.initTestableRoadmap()
+//        roadmap.calcEachTaskPosition()
+//        return roadmap
         roadmap.calcEachTaskPosition()
+        
         return roadmap
     }
     

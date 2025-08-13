@@ -57,6 +57,7 @@ class CreatableRoadmab: ObservableObject{
     
     func save(){
         let roadmapString = roadmap.getJson()
+        print("roadmapString", roadmapString)
         let jsonSaver = try! LocalJsonFileSaver(fileName: FileNameCreator().create(fileName: name))
         setDefaultRoadmap()
         do{

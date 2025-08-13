@@ -37,7 +37,7 @@ class TaskTypeBranchEditorViewModel: ObservableObject{
     func addTask(){
         print("h1")
         if validateInputs(){
-            print("h2")
+            print("h2", )
             mainCoordinator?.creatableRoadmap.initBranch(title: taskTitle)
             mainCoordinator?.creatableRoadmap.addListOfTasks(branchCoordinator!.tasksList1)
             mainCoordinator?.creatableRoadmap.addListOfTasks(branchCoordinator!.tasksList2)

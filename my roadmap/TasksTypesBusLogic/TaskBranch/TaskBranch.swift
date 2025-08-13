@@ -96,7 +96,7 @@ final class TaskBranch: GenericState{
     
     func getJson() -> String {
         let branch1Str: String = parallelBranches[0].getJson()
-        let branch2Str: String = parallelBranches[0].getJson()
+        let branch2Str: String = parallelBranches[1].getJson()
         
         let branch1Data = branch1Str.data(using: .utf8)!
         let branch2Data = branch2Str.data(using: .utf8)!

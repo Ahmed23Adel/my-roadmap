@@ -14,7 +14,6 @@ class SettingsViewModel: ObservableObject{
     @Published var showError: Bool = false
     @Published var erroMsg = ""
     
-   
     @AppStorage(GlobalConstants.selectedRoadmapKey) var defaultRoadmapName: String = ""
     
     
