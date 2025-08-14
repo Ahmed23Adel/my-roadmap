@@ -62,54 +62,81 @@ struct RoadmapCanvasView: View {
         }
 //        .ignoresSafeArertea()
     }
+    
     @ViewBuilder
     private func drawRoadmapArrows() -> some View {
         // Start to first item
         if !roadmap.roadmap.isEmpty {
             ArrowLineView(
                 start: CGPoint(x: xPosMid, y: yPosMid + DrawableConstants.startImgHeight/3.9),
-                end: CGPoint(x: roadmap.roadmap[0].posX, y: roadmap.roadmap[0].posY - DrawableConstants.height/1.8)
+                end: CGPoint(x: roadmap.roadmap[0].posX, y: roadmap.roadmap[0].posY - DrawableConstants.height/2) // Top of first task
             )
         }
         
         // Between roadmap items
-        if roadmap.roadmap.count > 1{
-            
-        
+        if roadmap.roadmap.count > 1 {
             ForEach(0..<roadmap.roadmap.count-1, id: \.self) { index in
                 let current = roadmap.roadmap[index]
                 let next = roadmap.roadmap[index + 1]
                 
-                if current is TaskObject && next is TaskBranch{
-                    // Task to branch item
+                if current is TaskObject && next is TaskBranch {
+                    // Case 1: Task to Branch
                     let nextBranch = next as! TaskBranch
                     ArrowLineView(
-                        start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2),
-                        end: CGPoint(x: nextBranch.parallelBranches[0].posX, y: nextBranch.parallelBranches[0].posY)
+                        start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2), // Bottom of current task
+                        end: CGPoint(x: nextBranch.parallelBranches[0].tasks[0].posX, y: nextBranch.parallelBranches[0].tasks[0].posY - DrawableConstants.height/2) // Top of first task in first branch
                     )
                     ArrowLineView(
-                        start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2),
-                        end: CGPoint(x: nextBranch.parallelBranches[1].posX, y: nextBranch.parallelBranches[1].posY)
+                        start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2), // Bottom of current task
+                        end: CGPoint(x: nextBranch.parallelBranches[1].tasks[0].posX, y: nextBranch.parallelBranches[1].tasks[0].posY - DrawableConstants.height/2) // Top of first task in second branch
                     )
-                } else if current is TaskBranch && next is TaskObject{
+                } else if current is TaskBranch && next is TaskObject {
+                    // Case 2: Branch to Task
                     let currentBranch = current as! TaskBranch
                     let currentList1LastItem = currentBranch.parallelBranches[0].tasks.last!
                     let currentList2LastItem = currentBranch.parallelBranches[1].tasks.last!
                     
                     ArrowLineView(
-                        start: CGPoint(x: currentList1LastItem.posX, y: (currentList1LastItem.posY) + DrawableConstants.height/2),
-                        end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.margin*1.5)
+                        start: CGPoint(x: currentList1LastItem.posX, y: currentList1LastItem.posY + DrawableConstants.height/2), // Bottom of last task in first branch
+                        end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.height/2) // Top of next task
                     )
                     
                     ArrowLineView(
-                        start: CGPoint(x: currentList2LastItem.posX, y: (currentList2LastItem.posY) + DrawableConstants.height/2),
-                        end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.margin*1.5)
+                        start: CGPoint(x: currentList2LastItem.posX, y: currentList2LastItem.posY + DrawableConstants.height/2), // Bottom of last task in second branch
+                        end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.height/2) // Top of next task
                     )
-                } else if current is TaskObject && next is TaskObject{
+                } else if current is TaskBranch && next is TaskBranch {
+                    // Case 3: Branch to Branch
+                    let currentBranch = current as! TaskBranch
+                    let nextBranch = next as! TaskBranch
                     
+                    let currentList1LastItem = currentBranch.parallelBranches[0].tasks.last!
+                    let currentList2LastItem = currentBranch.parallelBranches[1].tasks.last!
+                    
+                    // From first branch's last item to both branches of next
                     ArrowLineView(
-                        start: CGPoint(x: current.posX, y: (current.posY) + DrawableConstants.height/2),
-                        end: CGPoint(x: next.posX, y: next.posY)
+                        start: CGPoint(x: currentList1LastItem.posX, y: currentList1LastItem.posY + DrawableConstants.height/2), // Bottom of last task in first branch
+                        end: CGPoint(x: nextBranch.parallelBranches[0].tasks[0].posX, y: nextBranch.parallelBranches[0].tasks[0].posY - DrawableConstants.height/2) // Top of first task in next first branch
+                    )
+                    ArrowLineView(
+                        start: CGPoint(x: currentList1LastItem.posX, y: currentList1LastItem.posY + DrawableConstants.height/2), // Bottom of last task in first branch
+                        end: CGPoint(x: nextBranch.parallelBranches[1].tasks[0].posX, y: nextBranch.parallelBranches[1].tasks[0].posY - DrawableConstants.height/2) // Top of first task in next second branch
+                    )
+                    
+                    // From second branch's last item to both branches of next
+                    ArrowLineView(
+                        start: CGPoint(x: currentList2LastItem.posX, y: currentList2LastItem.posY + DrawableConstants.height/2), // Bottom of last task in second branch
+                        end: CGPoint(x: nextBranch.parallelBranches[0].tasks[0].posX, y: nextBranch.parallelBranches[0].tasks[0].posY - DrawableConstants.height/2) // Top of first task in next first branch
+                    )
+                    ArrowLineView(
+                        start: CGPoint(x: currentList2LastItem.posX, y: currentList2LastItem.posY + DrawableConstants.height/2), // Bottom of last task in second branch
+                        end: CGPoint(x: nextBranch.parallelBranches[1].tasks[0].posX, y: nextBranch.parallelBranches[1].tasks[0].posY - DrawableConstants.height/2) // Top of first task in next second branch
+                    )
+                } else if current is TaskObject && next is TaskObject {
+                    // Case 4: Task to Task
+                    ArrowLineView(
+                        start: CGPoint(x: current.posX, y: current.posY + DrawableConstants.height/2), // Bottom of current task
+                        end: CGPoint(x: next.posX, y: next.posY - DrawableConstants.height/2) // Top of next task
                     )
                 }
             }

@@ -9,9 +9,44 @@ import SwiftUI
 
 struct ChooseTaskTypeCoordinatorView: View {
     @ObservedObject var coordinator = ChooseTaskTypeCoordinator()
+    @State private var showSheet = false
+    
     var body: some View {
-        Group{
-            switch coordinator.currentRoute { //START: switch
+        ZStack {
+            Color.clear
+            
+            // Plus button in bottom right
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        showSheet = true
+                    }) {
+                        Image(systemName: "plus")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .frame(width: 56, height: 56)
+                            .background(Color.yellow)
+                            .clipShape(Circle())
+                            .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
+                    }
+                    .padding()
+                }
+            }
+        }
+        .sheet(isPresented: $showSheet) {
+            sheetContent
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
+        .environmentObject(coordinator)
+    }
+    
+    private var sheetContent: some View {
+        Group {
+            switch coordinator.currentRoute {
             case .chooseType:
                 ChooseTaskTypeView()
                     .transition(.asymmetric(
@@ -48,27 +83,14 @@ struct ChooseTaskTypeCoordinatorView: View {
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .move(edge: .leading).combined(with: .opacity)
                     ))
-            
             default:
                 EmptyView()
             }
-            
         }
         .padding()
-        .background{
-            RoundedRectangle(cornerRadius: 13)
-                .fill(Color.white)
-        }
-        .overlay{
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.yellow, lineWidth: 7)
-                .padding(5)
-            
-        }
-        .shadow(radius: 30)
-        .environmentObject(coordinator)
     }
 }
+
 #Preview {
     ChooseTaskTypeCoordinatorView()
 }

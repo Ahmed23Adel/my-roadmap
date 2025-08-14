@@ -18,7 +18,7 @@ struct TaskGoalView: View {
     }
     
     var body: some View {
-        GenericViewTaskType(taskBook: viewModel.taskGoal, Tasklabel: viewModel.getLabel(), imgName: viewModel.getImgName())
+        GenericViewTaskType(singleTask: viewModel.taskGoal, Tasklabel: viewModel.getLabel(), imgName: viewModel.getImgName())
     }
 }
 

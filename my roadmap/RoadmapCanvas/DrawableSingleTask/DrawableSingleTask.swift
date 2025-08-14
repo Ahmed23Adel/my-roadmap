@@ -19,6 +19,7 @@ struct DrawableSingleTask: View {
         } else if let taskYoutube = singleTask as? TaskYoutubePlaylist {
             TaskYoutubePlaylistView(taskYoutube: taskYoutube)
         }
+        
     }
 }
 

@@ -56,17 +56,7 @@ struct BranchCoordinatorView: View {
             
         }
         .padding()
-        .background{
-            RoundedRectangle(cornerRadius: 13)
-                .fill(Color.white)
-        }
-        .overlay{
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.yellow, lineWidth: 7)
-                .padding(5)
-            
-        }
-        .shadow(radius: 30)
+        
         .environmentObject(coordinator)
     }
 }

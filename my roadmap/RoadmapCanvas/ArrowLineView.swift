@@ -13,29 +13,55 @@ struct ArrowLineView: View {
     
     var body: some View {
         ZStack {
-            // L-shaped line path (always ends vertical)
+            // L-shaped line path (always ends vertical) - ORIGINAL LOGIC MAINTAINED
             Path { path in
                 path.move(to: start)
                 
-                if abs(Int(end.y) - Int(start.y)) > 0 {
-                    // Step 1: Go vertical for a quarter of the total vertical distance
+                if abs(Int(end.x) - Int(start.x)) == 0 {
+                    // Same X coordinate - draw straight vertical line
+                    path.addLine(to: end)
+                } else if abs(Int(end.y) - Int(start.y)) > 0 {
+                    // Different X and Y - use L-shaped path with curves
                     let verticalDistance = end.y - start.y
                     let quarterVertical = start.y + (verticalDistance / 4)
-                    let midUpperPoint = CGPoint(x: start.x, y: quarterVertical)
-                    path.addLine(to: midUpperPoint)
+                    let horizontalDistance = end.x - start.x
                     
-                    // Step 2: Go horizontal to end.x
-                    let midPoint = CGPoint(x: end.x, y: quarterVertical)
-                    path.addLine(to: midPoint)
+                    let curveRadius: CGFloat = 20
                     
-                    // Step 3: Go vertical for the rest (remaining 3/4) to end
+                    // Determine direction for proper curve placement
+                    let goingRight = horizontalDistance > 0
+                    let goingDown = verticalDistance > 0
+                    
+                    // Step 1: Vertical line (stop before corner for smoothness)
+                    let preCorner1Y = goingDown ? quarterVertical - curveRadius : quarterVertical + curveRadius
+                    let preCorner1 = CGPoint(x: start.x, y: preCorner1Y)
+                    path.addLine(to: preCorner1)
+                    
+                    // Smooth curve from vertical to horizontal
+                    let postCorner1X = goingRight ? start.x + curveRadius : start.x - curveRadius
+                    let postCorner1 = CGPoint(x: postCorner1X, y: quarterVertical)
+                    let control1 = CGPoint(x: start.x, y: quarterVertical)
+                    path.addQuadCurve(to: postCorner1, control: control1)
+                    
+                    // Step 2: Horizontal line (stop before corner for smoothness)
+                    let preCorner2X = goingRight ? end.x - curveRadius : end.x + curveRadius
+                    let preCorner2 = CGPoint(x: preCorner2X, y: quarterVertical)
+                    path.addLine(to: preCorner2)
+                    
+                    // Smooth curve from horizontal to vertical
+                    let postCorner2Y = goingDown ? quarterVertical + curveRadius : quarterVertical - curveRadius
+                    let postCorner2 = CGPoint(x: end.x, y: postCorner2Y)
+                    let control2 = CGPoint(x: end.x, y: quarterVertical)
+                    path.addQuadCurve(to: postCorner2, control: control2)
+                    
+                    // Step 3: Final vertical line to end
                     path.addLine(to: end)
                 } else {
-                    // If no vertical distance, just draw straight horizontal
+                    // Same Y coordinate - draw straight horizontal line
                     path.addLine(to: end)
                 }
             }
-            .stroke(Color.black, lineWidth: 2)
+            .stroke(Color.black, style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round))
             
             Image("arrowtip")
                 .resizable()
@@ -46,5 +72,5 @@ struct ArrowLineView: View {
 }
 
 #Preview {
-    ArrowLineView(start: CGPointMake(10, 10), end: CGPointMake(100, 100))
+    ArrowLineView(start: CGPointMake(100, 10), end: CGPointMake(10, 100))
 }

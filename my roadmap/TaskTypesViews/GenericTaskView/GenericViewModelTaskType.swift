@@ -9,18 +9,18 @@ import Foundation
 import Combine
 
 class GenericViewModelTaskType: ObservableObject{
-    @Published var taskBook: TaskObject
+    @Published var singleTask: TaskObject
     
-    init(taskBook: TaskObject){
-        self.taskBook = taskBook
+    init(singleTask: TaskObject){
+        self.singleTask = singleTask
     }
     
-    func setTask(taskBook: TaskBook){
-        self.taskBook = taskBook
+    func setTask(singleTask: TaskBook){
+        self.singleTask = singleTask
     }
     
     func getProgressFraction() -> Float {
-        return Float(taskBook.progress)/100
+        return Float(singleTask.progress)/100
     }
     
 }

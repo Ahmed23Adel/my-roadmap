@@ -18,7 +18,7 @@ struct TaskYoutubePlaylistView: View {
     }
     
     var body: some View {
-        GenericViewTaskType(taskBook: viewModel.taskYoutube, Tasklabel: viewModel.getLabel(), imgName: viewModel.getImgName())
+        GenericViewTaskType(singleTask: viewModel.taskYoutube, Tasklabel: viewModel.getLabel(), imgName: viewModel.getImgName())
     }
 }
 

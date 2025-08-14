@@ -12,7 +12,7 @@ class Roadmap: ObservableObject, JsonExtractor{
     
     
     @Published private(set) var roadmap: [any GenericState] = []
-    
+    @Published private(set) var roadmapName: String = ""
     var count: Int{
         roadmap.count
     }

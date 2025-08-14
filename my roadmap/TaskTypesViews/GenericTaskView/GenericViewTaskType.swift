@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct GenericViewTaskType: View {
-    var taskBook: TaskObject
+    var singleTask: TaskObject
     @StateObject var viewModel: GenericViewModelTaskType
     private var Tasklabel: String
     private var imgName: String
     
-    init(taskBook: TaskObject, Tasklabel: String, imgName: String) {
-        self.taskBook = taskBook
-        self._viewModel = StateObject(wrappedValue: GenericViewModelTaskType(taskBook: taskBook))
+    init(singleTask: TaskObject, Tasklabel: String, imgName: String) {
+        self.singleTask = singleTask
+        self._viewModel = StateObject(wrappedValue: GenericViewModelTaskType(singleTask: singleTask))
         self.Tasklabel = Tasklabel
         self.imgName = imgName
     }
@@ -26,6 +26,12 @@ struct GenericViewTaskType: View {
                 .resizable()
                 .frame(width: DrawableConstants.width, height: DrawableConstants.height)
                 .cornerRadius(20)
+                .overlay{
+                    if singleTask.taskStatus == .notStarted{
+                        Color.black.opacity(0.3)
+                            .cornerRadius(20)
+                    }
+                }
             
             RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
                 .stroke(lineWidth: 15)
@@ -54,7 +60,7 @@ struct GenericViewTaskType: View {
                 Spacer()
                 
             }//END VSTACK for bookicon
-               
+            
             
         } //END ZSTACK
         .frame(width: DrawableConstants.width + DrawableConstants.margin, height: DrawableConstants.height + DrawableConstants.margin)
@@ -93,7 +99,7 @@ struct PreviewContent: View {
                 expectedDeadline: futureDate,
                 taskStatus: .inProgress
             )
-            return AnyView(GenericViewTaskType(taskBook: taskBook, Tasklabel: taskBook.bookName, imgName: "book"))
+            return AnyView(GenericViewTaskType(singleTask: taskBook, Tasklabel: taskBook.bookName, imgName: "book"))
         } catch {
             return AnyView(Text("Preview Error: \(error.localizedDescription)")
                 .foregroundColor(.red))

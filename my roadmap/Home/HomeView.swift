@@ -16,6 +16,10 @@ struct HomeView: View {
             Image("backgroundgrid")
                 .resizable()
                 .scaledToFill()
+                .blur(radius: 1)
+                .overlay{
+                    Color.black.opacity(0.15)
+                }
                 .ignoresSafeArea()
             
             VStack{ // START: VStack for raodmapCanvas
@@ -42,6 +46,7 @@ struct HomeView: View {
                             .resizable()
                             .frame(width: 50, height: 50)
                             .padding(.leading, 120)
+                        
                     }
                     Spacer()
                     Button{
@@ -70,4 +75,5 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .environmentObject(Coordinator())
+        .environmentObject(HomeCoordinator())
 }

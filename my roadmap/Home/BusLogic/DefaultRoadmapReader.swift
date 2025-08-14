@@ -48,27 +48,27 @@ class DefaultRoadmapReader: ObservableObject {
                 
                 // Create appropriate task object based on type
                 switch type {
-                case "book":
+                case GlobalConstants.bookKey:
                     if let bookTask = createBookTask(from: taskDict) {
                         tasks.append(bookTask)
                     }
                     
-                case "article":
+                case GlobalConstants.articleKey:
                     if let articleTask = createArticleTask(from: taskDict) {
                         tasks.append(articleTask)
                     }
                     
-                case "goal":
+                case GlobalConstants.goalKey:
                     if let goalTask = createGoalTask(from: taskDict) {
                         tasks.append(goalTask)
                     }
                     
-                case "branch":
+                case GlobalConstants.branchKey:
                     if let branchTask = createBranchTask(from: taskDict) {
                         tasks.append(branchTask)
                     }
                     
-                case "youtube":
+                case GlobalConstants.youtubeKey:
                     if let playlistTask = createYoutubePlaylistTask(from: taskDict) {
                         tasks.append(playlistTask)
                     }
@@ -90,25 +90,24 @@ class DefaultRoadmapReader: ObservableObject {
     }
     
     // MARK: - Task Creation Methods
-    
     private func createBookTask(from dict: [String: Any]) -> TaskBook? {
-        guard let title = dict["title"] as? String,
-              let bookName = dict["bookName"] as? String,
-              let numPagesInBook = dict["numPagesInBook"] as? Int,
-              let taskStatus = dict["taskStatus"] as? String else {
+        guard let title = dict[BookConstants.titleKey] as? String,
+              let bookName = dict[BookConstants.bookNameKey] as? String,
+              let numPagesInBook = dict[BookConstants.numPagesInBookKey] as? Int,
+              let taskStatus = dict[BookConstants.taskStatusKey] as? String else {
             return nil
         }
         
-        let numPagesRead = dict["numPagesRead"] as? Int ?? 0
-        let progress = dict["progress"] as? Int ?? 0
-        let expectedStartDate = parseDate(dict["expectedStartDate"] as? String)
-        let expectedDeadline = parseDate(dict["expectedDeadline"] as? String)
-        let startDate = parseDate(dict["startDate"] as? String)
-        let completedAt = parseDate(dict["completedAt"] as? String)
+        let numPagesRead = dict[BookConstants.numPagesReadKey] as? Int ?? 0
+        let progress = dict[BookConstants.progressKey] as? Int ?? 0
+        let expectedStartDate = parseDate(dict[BookConstants.expectedStartDateKey] as? String)
+        let expectedDeadline = parseDate(dict[BookConstants.expectedDeadlineKey] as? String)
+        let startDate = parseDate(dict[BookConstants.startDateKey] as? String)
+        let completedAt = parseDate(dict[BookConstants.completedAtKey] as? String)
         
         do {
             switch taskStatus {
-            case "notStarted":
+            case GlobalConstants.statusNotStarted:
                 return try TaskBook.createNotStartedBook(
                     bookName: bookName,
                     numPagesInBook: numPagesInBook,
@@ -117,7 +116,7 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedDeadline: expectedDeadline
                 )
                 
-            case "inProgress":
+            case GlobalConstants.statusInProgress:
                 guard let startDate = startDate else { return nil }
                 return try TaskBook.createInProgressBook(
                     bookName: bookName,
@@ -131,7 +130,7 @@ class DefaultRoadmapReader: ObservableObject {
                     taskStatus: TaskStatus.inProgress
                 )
                 
-            case "completed":
+            case GlobalConstants.statusCompleted:
                 guard let startDate = startDate,
                       let completedAt = completedAt else { return nil }
                 return try TaskBook.createCompletedBook(
@@ -153,24 +152,25 @@ class DefaultRoadmapReader: ObservableObject {
             return nil
         }
     }
+
     
     private func createArticleTask(from dict: [String: Any]) -> TaskArticle? {
-        guard let title = dict["title"] as? String,
-              let articleName = dict["articleName"] as? String,
-              let linkToArticle = dict["linkToArticle"] as? String,
-              let taskStatus = dict["taskStatus"] as? String else {
+        guard let title = dict[ArticleConstants.titleKey] as? String,
+              let articleName = dict[ArticleConstants.articleNameKey] as? String,
+              let linkToArticle = dict[ArticleConstants.linkToArticleKey] as? String,
+              let taskStatus = dict[ArticleConstants.taskStatusKey] as? String else {
             return nil
         }
         
-        let progress = dict["progress"] as? Int ?? 0
-        let expectedStartDate = parseDate(dict["expectedStartDate"] as? String)
-        let expectedDeadline = parseDate(dict["expectedDeadline"] as? String)
-        let startDate = parseDate(dict["startDate"] as? String)
-        let completedAt = parseDate(dict["completedAt"] as? String)
+        let progress = dict[ArticleConstants.progressKey] as? Int ?? 0
+        let expectedStartDate = parseDate(dict[ArticleConstants.expectedStartDateKey] as? String)
+        let expectedDeadline = parseDate(dict[ArticleConstants.expectedDeadlineKey] as? String)
+        let startDate = parseDate(dict[ArticleConstants.startDateKey] as? String)
+        let completedAt = parseDate(dict[ArticleConstants.completedAtKey] as? String)
         
         do {
             switch taskStatus {
-            case "notStarted":
+            case GlobalConstants.statusNotStarted:
                 return try TaskArticle.createNotStartedArticle(
                     articleName: articleName,
                     linkToArticle: linkToArticle,
@@ -179,7 +179,7 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedDeadline: expectedDeadline
                 )
                 
-            case "inProgress":
+            case GlobalConstants.statusInProgress:
                 guard let startDate = startDate else { return nil }
                 return try TaskArticle.createInProgressArticle(
                     articleName: articleName,
@@ -192,7 +192,7 @@ class DefaultRoadmapReader: ObservableObject {
                     taskStatus: TaskStatus.inProgress
                 )
                 
-            case "completed":
+            case GlobalConstants.statusCompleted:
                 guard let startDate = startDate,
                       let completedAt = completedAt else { return nil }
                 return try TaskArticle.createCompletedArticle(
@@ -213,34 +213,34 @@ class DefaultRoadmapReader: ObservableObject {
             return nil
         }
     }
+
     
     private func createGoalTask(from dict: [String: Any]) -> TaskGoal? {
-        guard let title = dict["title"] as? String,
-              let details = dict["details"] as? String,
-              let taskStatus = dict["taskStatus"] as? String else {
+        guard let title = dict[GoalConstants.titleKey] as? String,
+              let details = dict[GoalConstants.detailsKey] as? String,
+              let taskStatus = dict[GoalConstants.taskStatusKey] as? String else {
             return nil
         }
         
-        let imageLink = dict["imageLink"] as? String
-        let progress = dict["progress"] as? Int ?? 0
-        let expectedStartDate = parseDate(dict["expectedStartDate"] as? String)
-        let expectedDeadline = parseDate(dict["expectedDeadline"] as? String)
-        let startDate = parseDate(dict["startDate"] as? String)
-        let completedAt = parseDate(dict["completedAt"] as? String)
+        let imageLink = dict[GoalConstants.imageLinkKey] as? String
+        let progress = dict[GoalConstants.progressKey] as? Int ?? 0
+        let expectedStartDate = parseDate(dict[GoalConstants.expectedStartDateKey] as? String)
+        let expectedDeadline = parseDate(dict[GoalConstants.expectedDeadlineKey] as? String)
+        let startDate = parseDate(dict[GoalConstants.startDateKey] as? String)
+        let completedAt = parseDate(dict[GoalConstants.completedAtKey] as? String)
         
         do {
             switch taskStatus {
-            case "notStarted":
-                // You'll need to implement TaskGoal.createNotStartedGoal() method
-                // For now, using inProgress as fallback
+            case GlobalConstants.statusNotStarted:
                 return try TaskGoal.createNotStartedGoal(
                     details: details,
                     imageLink: imageLink,
                     title: title,
                     expectedStartDate: expectedStartDate,
-                    expectedDeadline: expectedDeadline)
+                    expectedDeadline: expectedDeadline
+                )
                 
-            case "inProgress":
+            case GlobalConstants.statusInProgress:
                 guard let startDate = startDate else { return nil }
                 return try TaskGoal.createInProgressGoal(
                     details: details,
@@ -253,7 +253,7 @@ class DefaultRoadmapReader: ObservableObject {
                     taskStatus: TaskStatus.inProgress
                 )
                 
-            case "completed":
+            case GlobalConstants.statusCompleted:
                 guard let startDate = startDate,
                       let completedAt = completedAt else { return nil }
                 return try TaskGoal.createCompletedGoal(
@@ -274,27 +274,27 @@ class DefaultRoadmapReader: ObservableObject {
             return nil
         }
     }
-    
+
     private func createBranchTask(from dict: [String: Any]) -> TaskBranch? {
         let branch = TaskBranch(title: "Branch")
         
         // Parse branch1
-        if let branch1Array = dict["branch1"] as? [[String: Any]] {
+        if let branch1Array = dict[BranchConstants.branch1Key] as? [[String: Any]] {
             do {
                 let listOfTasks1 = ListOfTasks(title: "Branch 1")
                 
                 for branchTaskDict in branch1Array {
-                    guard let type = branchTaskDict["type"] as? String else { continue }
+                    guard let type = branchTaskDict[BranchConstants.typeKey] as? String else { continue }
                     
                     var task: TaskObject?
                     switch type {
-                    case "book":
+                    case GlobalConstants.bookKey:
                         task = createBookTask(from: branchTaskDict)
-                    case "article":
+                    case GlobalConstants.articleKey:
                         task = createArticleTask(from: branchTaskDict)
-                    case "goal":
+                    case GlobalConstants.goalKey:
                         task = createGoalTask(from: branchTaskDict)
-                    case "youtubePlaylist":
+                    case GlobalConstants.youtubeKey:
                         task = createYoutubePlaylistTask(from: branchTaskDict)
                     default:
                         continue
@@ -313,22 +313,22 @@ class DefaultRoadmapReader: ObservableObject {
         }
         
         // Parse branch2
-        if let branch2Array = dict["branch2"] as? [[String: Any]] {
+        if let branch2Array = dict[BranchConstants.branch2Key] as? [[String: Any]] {
             do {
                 let listOfTasks2 = ListOfTasks(title: "Branch 2")
                 
                 for branchTaskDict in branch2Array {
-                    guard let type = branchTaskDict["type"] as? String else { continue }
+                    guard let type = branchTaskDict[BranchConstants.typeKey] as? String else { continue }
                     
                     var task: TaskObject?
                     switch type {
-                    case "book":
+                    case GlobalConstants.bookKey:
                         task = createBookTask(from: branchTaskDict)
-                    case "article":
+                    case GlobalConstants.articleKey:
                         task = createArticleTask(from: branchTaskDict)
-                    case "goal":
+                    case GlobalConstants.goalKey:
                         task = createGoalTask(from: branchTaskDict)
-                    case "youtube":
+                    case GlobalConstants.youtubeKey:
                         task = createYoutubePlaylistTask(from: branchTaskDict)
                     default:
                         continue
@@ -348,26 +348,27 @@ class DefaultRoadmapReader: ObservableObject {
         
         return branch
     }
+
     
     private func createYoutubePlaylistTask(from dict: [String: Any]) -> TaskYoutubePlaylist? {
-        guard let title = dict["title"] as? String,
-              let playlistName = dict["playlistName"] as? String,
-              let linkToYoutube = dict["linkToYoutube"] as? String,
-              let videoCount = dict["videoCount"] as? Int,
-              let taskStatus = dict["taskStatus"] as? String else {
+        guard let title = dict[YoutubeConstants.titleKey] as? String,
+              let playlistName = dict[YoutubeConstants.playlistNameKey] as? String,
+              let linkToYoutube = dict[YoutubeConstants.linkToYoutubeKey] as? String,
+              let videoCount = dict[YoutubeConstants.videoCountKey] as? Int,
+              let taskStatus = dict[YoutubeConstants.taskStatusKey] as? String else {
             return nil
         }
         
-        let numVideosWatched = dict["numVideosWatched"] as? Int ?? 0
-        let progress = dict["progress"] as? Int ?? 0
-        let expectedStartDate = parseDate(dict["expectedStartDate"] as? String)
-        let expectedDeadline = parseDate(dict["expectedDeadline"] as? String)
-        let startDate = parseDate(dict["startDate"] as? String)
-        let completedAt = parseDate(dict["completedAt"] as? String)
+        let numVideosWatched = dict[YoutubeConstants.numVideosWatchedKey] as? Int ?? 0
+        let progress = dict[YoutubeConstants.progressKey] as? Int ?? 0
+        let expectedStartDate = parseDate(dict[YoutubeConstants.expectedStartDateKey] as? String)
+        let expectedDeadline = parseDate(dict[YoutubeConstants.expectedDeadlineKey] as? String)
+        let startDate = parseDate(dict[YoutubeConstants.startDateKey] as? String)
+        let completedAt = parseDate(dict[YoutubeConstants.completedAtKey] as? String)
         
         do {
             switch taskStatus {
-            case "notStarted":
+            case GlobalConstants.statusNotStarted:
                 return try TaskYoutubePlaylist.createNotStartedYoutubePlaylist(
                     playlistName: playlistName,
                     videoCount: videoCount,
@@ -377,7 +378,7 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedDeadline: expectedDeadline
                 )
                 
-            case "inProgress":
+            case GlobalConstants.statusInProgress:
                 guard let startDate = startDate else { return nil }
                 return try TaskYoutubePlaylist.createInProgressYoutubePlaylist(
                     playlistName: playlistName,
@@ -392,7 +393,7 @@ class DefaultRoadmapReader: ObservableObject {
                     taskStatus: TaskStatus.inProgress
                 )
                 
-            case "completed":
+            case GlobalConstants.statusCompleted:
                 guard let startDate = startDate,
                       let completedAt = completedAt else { return nil }
                 return try TaskYoutubePlaylist.createCompletedYoutubePlaylist(
@@ -414,6 +415,7 @@ class DefaultRoadmapReader: ObservableObject {
             return nil
         }
     }
+
     
     // MARK: - Helper Methods
     

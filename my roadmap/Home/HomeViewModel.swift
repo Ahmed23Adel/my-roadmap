@@ -7,11 +7,13 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class HomeViewModel: ObservableObject{
     var mainCoordinator: Coordinator?
     var homeCoordinator: HomeCoordinator?
     @Published private var roadmap: Roadmap
+    @AppStorage(GlobalConstants.selectedRoadmapKey) var defaultRoadmapName: String = ""
     
     init(){
         let defaultRoadmapReader = DefaultRoadmapReader()
@@ -27,46 +29,16 @@ class HomeViewModel: ObservableObject{
     }
     
     func getRoadmap() -> Roadmap{
-//        let roadmap = Roadmap()
-//        roadmap.initTestableRoadmap()
-//        roadmap.calcEachTaskPosition()
-//        return roadmap
         roadmap.calcEachTaskPosition()
-        
         return roadmap
     }
     
-    func getTaskBook() -> TaskBook{
-        var currentDate: Date {
-            return Date()
-        }
-        
-        var pastDate: Date {
-            return Calendar.current.date(byAdding: .day, value: -10, to: Date())!
-        }
-        
-        var futureDate: Date {
-            return Calendar.current.date(byAdding: .day, value: 10, to: Date())!
-        }
-        let startDate = pastDate
-        let taskBook = try! TaskBook.createInProgressBook(
-            bookName: "Clean code",
-            numPagesInBook: 300,
-            numPagesRead: 50,
-            title: "Read book",
-            progress: 20, // Assuming 20% progress
-            expectedStartDate: pastDate,
-            startDate: startDate,
-            expectedDeadline: futureDate,
-            taskStatus: .inProgress
-        )
-        return taskBook
-    }
+
     
     
     
     func getRoadmapName() -> String{
-        "Testable Roadmap"
+        defaultRoadmapName
     }
     
     func navigateToAddNewRoadmap(){
