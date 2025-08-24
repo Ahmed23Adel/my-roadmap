@@ -17,13 +17,16 @@ struct TaskTypeBranchEditorView: View {
     @Binding var tasksList2: ListOfTasks
     
     @StateObject private var viewModel = TaskTypeBranchEditorViewModel()
+    
+    var showSheetFn: (TaskObject) -> Void
+    
     var body: some View {
         VStack{ // START outer VSTACK
             HStack{ // START HStack
                 VStack{ // START  VStack
                     ScrollView(.vertical){
                         ForEach(tasksList1, id: \.self) { singleTask in
-                            DrawableSingleTask(singleTask: singleTask)
+                            DrawableSingleTask(singleTask: singleTask, showSheetFn: showSheetFn)
                                 .scaleEffect(0.5)
                         }
                     }
@@ -37,7 +40,7 @@ struct TaskTypeBranchEditorView: View {
                 VStack{ // START  VStack
                     ScrollView(.vertical){
                         ForEach(tasksList2, id: \.self) { singleTask in
-                            DrawableSingleTask(singleTask: singleTask)
+                            DrawableSingleTask(singleTask: singleTask, showSheetFn: showSheetFn)
                                 .scaleEffect(0.5)
                         }
                     }
@@ -86,6 +89,6 @@ struct TaskTypeBranchEditorView: View {
 #Preview {
     @State var tasksList1 = ListOfTasks(title: "")
     @State var tasksList2 = ListOfTasks(title: "")
-    
-    TaskTypeBranchEditorView(tasksList1: $tasksList1, tasksList2: $tasksList2)
+    let anyFunc = { (_: TaskObject) in }
+    TaskTypeBranchEditorView(tasksList1: $tasksList1, tasksList2: $tasksList2, showSheetFn: anyFunc)
 }

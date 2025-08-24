@@ -15,6 +15,8 @@ class HomeViewModel: ObservableObject{
     @Published private var roadmap: Roadmap
     @AppStorage(GlobalConstants.selectedRoadmapKey) var defaultRoadmapName: String = ""
     
+    @Published var showSheet = false
+    @Published var selectedSheet: TaskObject?
     init(){
         let defaultRoadmapReader = DefaultRoadmapReader()
         roadmap = defaultRoadmapReader.read()
@@ -49,5 +51,9 @@ class HomeViewModel: ObservableObject{
         homeCoordinator?.push(.settings)
     }
     
+    func showSheetForTask(singleTask: TaskObject){
+        selectedSheet = singleTask
+        showSheet = true
+    }
     
 }

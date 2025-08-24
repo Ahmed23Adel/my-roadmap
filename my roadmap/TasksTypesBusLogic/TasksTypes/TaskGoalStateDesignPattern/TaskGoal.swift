@@ -58,8 +58,8 @@ final class TaskGoal: TaskObject {
     
     // MARK: - Factory methods
     static func createNotStartedGoal(details: String, imageLink: String?,
-                                     title: String, expectedStartDate: Date?, expectedDeadline: Date?) throws -> TaskGoal {
-        try TaskGoal.validateInputsForNotStartedGoal(details: details, imageLink: imageLink, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, isOnCreation: true)
+                                     title: String, expectedStartDate: Date?, expectedDeadline: Date?, isOnCreation: Bool = true) throws -> TaskGoal {
+        try TaskGoal.validateInputsForNotStartedGoal(details: details, imageLink: imageLink, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, isOnCreation: isOnCreation)
         
         let goal = try TaskGoal(details: details,
                                 imageLink: imageLink,
@@ -71,7 +71,7 @@ final class TaskGoal: TaskObject {
                                 completedAt: nil,
                                 expectedDeadline: expectedDeadline,
                                 taskStatus: .notStarted,
-                                isOnCreation: true
+                                isOnCreation: isOnCreation
         )
         goal.currentState = NotStartedTaskGoalState(taskGoal: goal)
         return goal
@@ -79,7 +79,7 @@ final class TaskGoal: TaskObject {
     
     static func createInProgressGoal(details: String, imageLink: String?,
                                      title: String, progress: Int, expectedStartDate: Date?, startDate: Date?,
-                                     expectedDeadline: Date?, taskStatus: TaskStatus) throws -> TaskGoal {
+                                     expectedDeadline: Date?, taskStatus: TaskStatus, isOnCreation: Bool = true) throws -> TaskGoal {
         try TaskGoal.validateInputsForInProgressGoal(details: details, imageLink: imageLink, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, startDate: startDate, progress: progress)
         
         let goal = try TaskGoal(details: details,
@@ -92,7 +92,7 @@ final class TaskGoal: TaskObject {
                                 completedAt: nil,
                                 expectedDeadline: expectedDeadline,
                                 taskStatus: .inProgress,
-                                isOnCreation: true
+                                isOnCreation: isOnCreation
         )
         goal.currentState = InProgressTaskGoalState(taskGoal: goal)
         return goal
@@ -103,7 +103,7 @@ final class TaskGoal: TaskObject {
                                     expectedStartDate: Date?,
                                     startDate: Date?,
                                     completedAt: Date,
-                                    expectedDeadline: Date?
+                                    expectedDeadline: Date?, isOnCreation: Bool = true
     ) throws -> TaskGoal {
         try TaskGoal.validateInputsForCompletedGoal(details: details, imageLink: imageLink, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, startDate: startDate, progress: 100, completed: true, completedAt: completedAt)
         
@@ -117,7 +117,7 @@ final class TaskGoal: TaskObject {
                                 completedAt: completedAt,
                                 expectedDeadline: expectedDeadline,
                                 taskStatus: .completed,
-                                isOnCreation: true
+                                isOnCreation: isOnCreation
         )
         goal.currentState = CompletedTaskGoalState(taskGoal: goal)
         return goal

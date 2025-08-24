@@ -33,7 +33,7 @@ struct HomeView: View {
                         )
                 }
                 
-                RoadmapCanvasView(roadmap: viewModel.getRoadmap())
+                RoadmapCanvasView(roadmap: viewModel.getRoadmap(), showSheetFn: viewModel.showSheetForTask)
                     .clipped()
             } // END: VStack for raodmapCanvas
             VStack{ // START: VStack for add button
@@ -68,6 +68,9 @@ struct HomeView: View {
         .onAppear{
             viewModel.setMainCoordinator(coordinator: mainCoordinator)
             viewModel.setHomeCoordinator(coordinator: homeCoordinator)
+        }
+        .sheet(isPresented: $viewModel.showSheet){
+            MainHomeTaskEditor(roadmap: viewModel.getRoadmap(), singleTask: viewModel.selectedSheet! )
         }
     }
 }

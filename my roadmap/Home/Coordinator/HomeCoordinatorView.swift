@@ -18,10 +18,7 @@ struct HomeCoordinatorView: View {
                     switch route {
                     case .settings:
                         SettingsView()
-//                    case .addNewRoadmap:
-//                        AddNewRoadmapCoordinatorView()
                     case .home:
-                        // This shouldn't happen as home is the root
                         EmptyView()
                     }
                 }

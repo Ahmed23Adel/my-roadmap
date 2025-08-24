@@ -66,8 +66,8 @@ final class TaskBook: TaskObject{
     }
     // MARK: - Factory methods
     static func createNotStartedBook(bookName: String, numPagesInBook: Int,
-                                     title: String, expectedStartDate: Date?, expectedDeadline: Date?) throws -> TaskBook {
-        try TaskBook.validateInputsForNotStartedTaskBook(bookName: bookName, numPagesInBook: numPagesInBook, numPagesRead: 0, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, isOnCreation: true)
+                                     title: String, expectedStartDate: Date?, expectedDeadline: Date?, isOnCreation: Bool = true) throws -> TaskBook {
+        try TaskBook.validateInputsForNotStartedTaskBook(bookName: bookName, numPagesInBook: numPagesInBook, numPagesRead: 0, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, isOnCreation: isOnCreation)
         let taskBook = try TaskBook(bookName: bookName,
                                     numPagesInBook: numPagesInBook,
                                     numPagesRead: 0,
@@ -79,14 +79,14 @@ final class TaskBook: TaskObject{
                                     completedAt: nil,
                                     expectedDeadline: expectedDeadline,
                                     taskStatus: .notStarted,
-                                    isOnCreation: true
+                                    isOnCreation: isOnCreation
                                     )
         taskBook.currentState = NotStartedTaskBookState(taskBook: taskBook)
         return taskBook
     }
     
     static func createInProgressBook(bookName: String, numPagesInBook: Int, numPagesRead: Int,
-                                     title: String, progress: Int, expectedStartDate: Date?, startDate: Date?, expectedDeadline: Date?, taskStatus: TaskStatus) throws -> TaskBook {
+                                     title: String, progress: Int, expectedStartDate: Date?, startDate: Date?, expectedDeadline: Date?, taskStatus: TaskStatus, isOnCreation: Bool = true) throws -> TaskBook {
         try TaskBook.validateInputsForInProgressTaskBook(expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, startDate: startDate, progress: progress, numPagesRead: numPagesRead, numPagesInBook: numPagesInBook)
         let taskBook = try TaskBook(bookName: bookName,
                                     numPagesInBook: numPagesInBook,
@@ -99,7 +99,7 @@ final class TaskBook: TaskObject{
                                     completedAt: nil,
                                     expectedDeadline: expectedDeadline,
                                     taskStatus: .inProgress,
-                                    isOnCreation: true
+                                    isOnCreation: isOnCreation
                                     )
         taskBook.currentState = InProgressTaskBookState(taskBook: taskBook)
         return taskBook
@@ -110,7 +110,7 @@ final class TaskBook: TaskObject{
                                     expectedStartDate: Date?,
                                     startDate: Date?,
                                     completedAt: Date,
-                                    expectedDeadline: Date?
+                                    expectedDeadline: Date?, isOnCreation: Bool = true
     ) throws -> TaskBook {
         try TaskBook.validateInputsForCompletedTaskBook(expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, startDate: startDate, progress: 100, numPagesRead: 100, numPagesInBook: 100, completed: true, completedAt: completedAt)
         let taskBook = try TaskBook(bookName: bookName,
@@ -124,7 +124,7 @@ final class TaskBook: TaskObject{
                                     completedAt: completedAt,
                                     expectedDeadline: expectedDeadline,
                                     taskStatus: .completed,
-                                    isOnCreation: true
+                                    isOnCreation: isOnCreation
                                     )
         taskBook.currentState = CompletedTaskBookState(taskBook: taskBook)
         return taskBook

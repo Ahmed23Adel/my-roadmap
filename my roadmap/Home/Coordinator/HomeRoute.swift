@@ -10,5 +10,4 @@ import Foundation
 enum HomeRoute: Hashable{
     case home
     case settings
-//    case addNewRoadmap
 }

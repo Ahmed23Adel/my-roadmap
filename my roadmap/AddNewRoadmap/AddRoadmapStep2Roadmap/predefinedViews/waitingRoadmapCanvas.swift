@@ -10,10 +10,11 @@ import Combine
 
 struct waitingRoadmapCanvas: View {
     @ObservedObject var viewModel: AddRoadmapStep2RoadmapViewModel
+    var showSheetFn: (TaskObject) -> Void
     var body: some View {
         VStack{
             if viewModel.isCoordinatorSet{
-                RoadmapCanvasView(roadmap: viewModel.getRoadmap())
+                RoadmapCanvasView(roadmap: viewModel.getRoadmap(), showSheetFn: showSheetFn)
             } else{
                 FixedProgressView()
             }
@@ -23,5 +24,6 @@ struct waitingRoadmapCanvas: View {
 
 #Preview {
     var viewModel =  AddRoadmapStep2RoadmapViewModel()
-    waitingRoadmapCanvas(viewModel: viewModel)
+    let anyFunc = { (_: TaskObject) in }
+    waitingRoadmapCanvas(viewModel: viewModel, showSheetFn: anyFunc)
 }

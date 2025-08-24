@@ -14,6 +14,7 @@ class RoadmapCanvasViewModel: ObservableObject{
     
     init(roadmap: Roadmap){
         self.roadmap = roadmap
+        print("roadmappppp",roadmap.roadmap)
     }
     
     

@@ -209,6 +209,7 @@ class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable,
         if let expectedStartDate = expectedStartDate,let expectedDeadline = expectedDeadline, expectedStartDate > expectedDeadline {
             throw TaskValidationError.invalidExpectedTimeRange
         }
+        print("isOnCreation", isOnCreation)
         if isOnCreation , let expectedStartDate = expectedStartDate, expectedStartDate < Date() {
             throw TaskValidationError.expectedStartDateInPast
         }

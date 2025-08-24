@@ -9,12 +9,49 @@ import Foundation
 import Combine
 import SwiftUI
 
-
+/// `DefaultRoadmapReader` is responsible for loading, parsing, and constructing the user's default roadmap.
+///
+/// This class:
+/// - Reads the default roadmap name from persistent storage (`@AppStorage`)
+/// - Loads roadmap JSON content from the app's document directory
+/// - Parses JSON into strongly-typed `Task` objects
+/// - Constructs a `Roadmap` object containing all parsed tasks
+///
+/// It supports multiple task types:
+/// - Books (`TaskBook`)
+/// - Articles (`TaskArticle`)
+/// - Goals (`TaskGoal`)
+/// - Branches (`TaskBranch`)
+/// - YouTube Playlists (`TaskYoutubePlaylist`)
+///
+/// Usage:
+/// ```swift
+/// let reader = DefaultRoadmapReader()
+/// let roadmap = reader.read()
+/// // roadmap now contains all tasks from the default roadmap file
+/// ```
 class DefaultRoadmapReader: ObservableObject {
+    // MARK: - Properties
+        
+    /// The name of the currently selected default roadmap, stored in `@AppStorage`.
     @AppStorage(GlobalConstants.selectedRoadmapKey) var defaultRoadmapName: String = ""
+    
+    /// Raw JSON content of the loaded roadmap.
     @Published var roadmapContent: String = ""
+    
+    /// The fully parsed `Roadmap` object, if successfully loaded and parsed.
     @Published var roadmap: Roadmap?
     
+    // MARK: - Public Methods
+       
+   /// Loads the roadmap content for the currently selected default roadmap from the file system.
+   ///
+   /// This method:
+   /// - Builds the file path for `<defaultRoadmapName>.json` in the app's document directory.
+   /// - Checks if the file exists.
+   /// - Reads the file's content into `roadmapContent`.
+   ///
+   /// If the `defaultRoadmapName` is empty or the file does not exist, this method returns without changes.
     func loadDefaultRoadmapContent() {
         guard !defaultRoadmapName.isEmpty else { return }
         
@@ -31,6 +68,29 @@ class DefaultRoadmapReader: ObservableObject {
         }
     }
     
+    /// Reads and returns the default roadmap as a `Roadmap` object.
+        ///
+    /// Internally calls:
+    /// - `loadDefaultRoadmapContent()` to load JSON from file
+    /// - `parseRoadmapFromJSON()` to convert the JSON into task objects
+    ///
+    /// - Returns: A `Roadmap` instance containing all tasks, or an empty `Roadmap` if loading fails.
+    func read() -> Roadmap {
+        loadDefaultRoadmapContent()
+        parseRoadmapFromJSON()
+        return roadmap ?? Roadmap()
+    }
+    
+    // MARK: - Private Methods
+       
+       /// Parses the current `roadmapContent` string into a `Roadmap` object.
+       ///
+       /// Steps:
+       /// 1. Convert JSON string to `Data`
+       /// 2. Deserialize into an array of dictionaries (`[[String: Any]]`)
+       /// 3. For each dictionary, determine the task type
+       /// 4. Call the corresponding `create<TaskType>` method to build a task object
+       /// 5. Append all created tasks into a new `Roadmap` instance
     private func parseRoadmapFromJSON() {
         guard !roadmapContent.isEmpty else { return }
         
@@ -113,7 +173,8 @@ class DefaultRoadmapReader: ObservableObject {
                     numPagesInBook: numPagesInBook,
                     title: title,
                     expectedStartDate: expectedStartDate,
-                    expectedDeadline: expectedDeadline
+                    expectedDeadline: expectedDeadline,
+                    isOnCreation: false
                 )
                 
             case GlobalConstants.statusInProgress:
@@ -127,7 +188,8 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedStartDate: expectedStartDate,
                     startDate: startDate,
                     expectedDeadline: expectedDeadline,
-                    taskStatus: TaskStatus.inProgress
+                    taskStatus: TaskStatus.inProgress,
+                    isOnCreation: false
                 )
                 
             case GlobalConstants.statusCompleted:
@@ -141,7 +203,8 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedStartDate: expectedStartDate,
                     startDate: startDate,
                     completedAt: completedAt,
-                    expectedDeadline: expectedDeadline
+                    expectedDeadline: expectedDeadline,
+                    isOnCreation: false
                 )
                 
             default:
@@ -176,7 +239,8 @@ class DefaultRoadmapReader: ObservableObject {
                     linkToArticle: linkToArticle,
                     title: title,
                     expectedStartDate: expectedStartDate,
-                    expectedDeadline: expectedDeadline
+                    expectedDeadline: expectedDeadline,
+                    isOnCreation: false
                 )
                 
             case GlobalConstants.statusInProgress:
@@ -189,7 +253,8 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedStartDate: expectedStartDate,
                     startDate: startDate,
                     expectedDeadline: expectedDeadline,
-                    taskStatus: TaskStatus.inProgress
+                    taskStatus: TaskStatus.inProgress,
+                    isOnCreation: false
                 )
                 
             case GlobalConstants.statusCompleted:
@@ -202,7 +267,8 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedStartDate: expectedStartDate,
                     startDate: startDate,
                     completedAt: completedAt,
-                    expectedDeadline: expectedDeadline
+                    expectedDeadline: expectedDeadline,
+                    isOnCreation: false
                 )
                 
             default:
@@ -237,7 +303,8 @@ class DefaultRoadmapReader: ObservableObject {
                     imageLink: imageLink,
                     title: title,
                     expectedStartDate: expectedStartDate,
-                    expectedDeadline: expectedDeadline
+                    expectedDeadline: expectedDeadline,
+                    isOnCreation: false
                 )
                 
             case GlobalConstants.statusInProgress:
@@ -250,7 +317,8 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedStartDate: expectedStartDate,
                     startDate: startDate,
                     expectedDeadline: expectedDeadline,
-                    taskStatus: TaskStatus.inProgress
+                    taskStatus: TaskStatus.inProgress,
+                    isOnCreation: false
                 )
                 
             case GlobalConstants.statusCompleted:
@@ -263,7 +331,8 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedStartDate: expectedStartDate,
                     startDate: startDate,
                     completedAt: completedAt,
-                    expectedDeadline: expectedDeadline
+                    expectedDeadline: expectedDeadline,
+                    isOnCreation: false
                 )
                 
             default:
@@ -375,7 +444,8 @@ class DefaultRoadmapReader: ObservableObject {
                     linkToYoutube: linkToYoutube,
                     title: title,
                     expectedStartDate: expectedStartDate,
-                    expectedDeadline: expectedDeadline
+                    expectedDeadline: expectedDeadline,
+                    isOnCreation: false
                 )
                 
             case GlobalConstants.statusInProgress:
@@ -390,7 +460,8 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedStartDate: expectedStartDate,
                     startDate: startDate,
                     expectedDeadline: expectedDeadline,
-                    taskStatus: TaskStatus.inProgress
+                    taskStatus: TaskStatus.inProgress,
+                    isOnCreation: false
                 )
                 
             case GlobalConstants.statusCompleted:
@@ -404,7 +475,8 @@ class DefaultRoadmapReader: ObservableObject {
                     expectedStartDate: expectedStartDate,
                     startDate: startDate,
                     completedAt: completedAt,
-                    expectedDeadline: expectedDeadline
+                    expectedDeadline: expectedDeadline,
+                    isOnCreation: false
                 )
                 
             default:
@@ -440,11 +512,5 @@ class DefaultRoadmapReader: ObservableObject {
         return documentDirectoryURL
     }
     
-    func read() -> Roadmap {
-        loadDefaultRoadmapContent()
-        
-        parseRoadmapFromJSON()
-        
-        return roadmap ?? Roadmap()
-    }
+    
 }

@@ -9,13 +9,13 @@ import SwiftUI
 
 struct DrawableListOfTasks: View {
     let listOfTasks: ListOfTasks
-    
+    var showSheetFn: (TaskObject) -> Void
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 10) {                
                 // Display all tasks in the list vertically
                 ForEach(listOfTasks.tasks, id: \.id) { task in
-                    DrawableSingleTask(singleTask: task)
+                    DrawableSingleTask(singleTask: task, showSheetFn: showSheetFn)
                     
                 }
             }
@@ -92,8 +92,9 @@ struct PreviewContentDrawableList: View {
                 ZStack {
                     Color(.systemGray6)
                         .ignoresSafeArea()
+                    let anyFunc = { (_: TaskObject) in }
                     
-                    DrawableListOfTasks(listOfTasks: listOfTasks)
+                    DrawableListOfTasks(listOfTasks: listOfTasks, showSheetFn: anyFunc)
                 }
             )
         } catch {

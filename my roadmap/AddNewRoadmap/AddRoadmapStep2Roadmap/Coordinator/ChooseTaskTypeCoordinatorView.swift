@@ -11,6 +11,10 @@ struct ChooseTaskTypeCoordinatorView: View {
     @ObservedObject var coordinator = ChooseTaskTypeCoordinator()
     @State private var showSheet = false
     
+    private func dummyFunc  (anyTask: TaskObject){
+        
+    }
+    
     var body: some View {
         ZStack {
             Color.clear
@@ -78,7 +82,7 @@ struct ChooseTaskTypeCoordinatorView: View {
                         removal: .move(edge: .leading).combined(with: .opacity)
                     ))
             case .branch:
-                BranchCoordinatorView()
+                BranchCoordinatorView( showSheetFn: dummyFunc)
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .move(edge: .leading).combined(with: .opacity)

@@ -9,16 +9,23 @@ import SwiftUI
 
 struct DrawableSingleTask: View {
     let singleTask: TaskObject
+    var showSheetFn: (TaskObject) -> Void
     var body: some View {
-        if let taskArticle = singleTask as? TaskArticle {
-            TaskArticleView(taskArticle: taskArticle)
-        } else if let taskBook = singleTask as? TaskBook {
-            TaskBookView(taskBook: taskBook)
-        }else if let taskGoal = singleTask as? TaskGoal {
-            TaskGoalView(taskGoal: taskGoal)
-        } else if let taskYoutube = singleTask as? TaskYoutubePlaylist {
-            TaskYoutubePlaylistView(taskYoutube: taskYoutube)
+        ZStack{
+            if let taskArticle = singleTask as? TaskArticle {
+                TaskArticleView(taskArticle: taskArticle)
+            } else if let taskBook = singleTask as? TaskBook {
+                TaskBookView(taskBook: taskBook)
+            }else if let taskGoal = singleTask as? TaskGoal {
+                TaskGoalView(taskGoal: taskGoal)
+            } else if let taskYoutube = singleTask as? TaskYoutubePlaylist {
+                TaskYoutubePlaylistView(taskYoutube: taskYoutube)
+            }
         }
+        .onTapGesture {
+            showSheetFn(singleTask)
+        }
+        
         
     }
 }
@@ -43,7 +50,7 @@ struct PreviewContentDrawable: View {
             }
             let taskGoal = try TaskGoal.createInProgressGoal(details: "any", imageLink: "", title: "finished", progress: 10, expectedStartDate: pastDate, startDate: pastDate, expectedDeadline: futureDate, taskStatus: .inProgress)
             
-            
+            let anyFunc = { (_: TaskObject) in }
                 
             return AnyView(TaskGoalView(taskGoal: taskGoal))
         } catch {

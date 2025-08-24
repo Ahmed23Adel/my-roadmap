@@ -10,10 +10,12 @@ import SwiftUI
 struct AddRoadmapStep2RoadmapView: View {
     @EnvironmentObject private var coordinator: AddNewRoadmapCoordinator
     @StateObject var viewModel = AddRoadmapStep2RoadmapViewModel()
-    
+    private func dummyFunc  (anyTask: TaskObject){
+        
+    }
     var body: some View {
         ZStack{
-            waitingRoadmapCanvas(viewModel: viewModel)
+            waitingRoadmapCanvas(viewModel: viewModel, showSheetFn: dummyFunc)
             ChooseTaskTypeCoordinatorView()
                     
             

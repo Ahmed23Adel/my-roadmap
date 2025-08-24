@@ -60,8 +60,8 @@ final class TaskArticle: TaskObject{
     }
     // MARK: - Factory methods
     static func createNotStartedArticle(articleName: String, linkToArticle: String,
-                                        title: String, expectedStartDate: Date?, expectedDeadline: Date?) throws -> TaskArticle {
-        try TaskArticle.validateInputsForNotStartedTaskArticle(articleName: articleName, linkToArticle: linkToArticle, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, isOnCreation: true)
+                                        title: String, expectedStartDate: Date?, expectedDeadline: Date?, isOnCreation: Bool = true) throws -> TaskArticle {
+        try TaskArticle.validateInputsForNotStartedTaskArticle(articleName: articleName, linkToArticle: linkToArticle, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, isOnCreation: isOnCreation)
         let taskArticle = try TaskArticle(articleName: articleName,
                                           linkToArticle: linkToArticle,
                                           title: title,
@@ -72,14 +72,14 @@ final class TaskArticle: TaskObject{
                                           completedAt: nil,
                                           expectedDeadline: expectedDeadline,
                                           taskStatus: .notStarted,
-                                          isOnCreation: true
+                                          isOnCreation: isOnCreation
         )
         taskArticle.currentState = NotStartedTaskArticleState(taskArticle: taskArticle)
         return taskArticle
     }
     
     static func createInProgressArticle(articleName: String, linkToArticle: String,
-                                        title: String, progress: Int, expectedStartDate: Date?, startDate: Date?, expectedDeadline: Date?, taskStatus: TaskStatus) throws -> TaskArticle {
+                                        title: String, progress: Int, expectedStartDate: Date?, startDate: Date?, expectedDeadline: Date?, taskStatus: TaskStatus, isOnCreation: Bool = true) throws -> TaskArticle {
         try TaskArticle.validateInputsForInProgressTaskArticle(expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, startDate: startDate, progress: progress, articleName: articleName, linkToArticle: linkToArticle)
         let taskArticle = try TaskArticle(articleName: articleName,
                                           linkToArticle: linkToArticle,
@@ -91,7 +91,7 @@ final class TaskArticle: TaskObject{
                                           completedAt: nil,
                                           expectedDeadline: expectedDeadline,
                                           taskStatus: .inProgress,
-                                          isOnCreation: true
+                                          isOnCreation: isOnCreation
         )
         taskArticle.currentState = InProgressTaskArticleState(taskArticle: taskArticle)
         return taskArticle
@@ -102,7 +102,8 @@ final class TaskArticle: TaskObject{
                                        expectedStartDate: Date?,
                                        startDate: Date?,
                                        completedAt: Date,
-                                       expectedDeadline: Date?
+                                       expectedDeadline: Date?, isOnCreation: Bool = true
+                                       
     ) throws -> TaskArticle {
         try TaskArticle.validateInputsForCompletedTaskArticle(expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, startDate: startDate, progress: 100, completed: true, completedAt: completedAt, articleName: articleName, linkToArticle: linkToArticle)
         let taskArticle = try TaskArticle(articleName: articleName,
@@ -115,7 +116,7 @@ final class TaskArticle: TaskObject{
                                           completedAt: completedAt,
                                           expectedDeadline: expectedDeadline,
                                           taskStatus: .completed,
-                                          isOnCreation: true
+                                          isOnCreation: isOnCreation
         )
         taskArticle.currentState = CompletedTaskArticleState(taskArticle: taskArticle)
         return taskArticle

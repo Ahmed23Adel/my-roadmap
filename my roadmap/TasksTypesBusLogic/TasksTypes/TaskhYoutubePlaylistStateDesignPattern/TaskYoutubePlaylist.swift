@@ -73,8 +73,8 @@ final class TaskYoutubePlaylist: TaskObject {
     
     // MARK: - Factory methods
     static func createNotStartedYoutubePlaylist(playlistName: String, videoCount: Int, linkToYoutube: String,
-                                              title: String, expectedStartDate: Date?, expectedDeadline: Date?) throws -> TaskYoutubePlaylist {
-        try TaskYoutubePlaylist.validateInputsForNotStartedYoutubePlaylist(playlistName: playlistName, videoCount: videoCount, numVideosWatched: 0, linkToYoutube: linkToYoutube, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, isOnCreation: true)
+                                              title: String, expectedStartDate: Date?, expectedDeadline: Date?, isOnCreation: Bool = true) throws -> TaskYoutubePlaylist {
+        try TaskYoutubePlaylist.validateInputsForNotStartedYoutubePlaylist(playlistName: playlistName, videoCount: videoCount, numVideosWatched: 0, linkToYoutube: linkToYoutube, expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, isOnCreation: isOnCreation)
         
         let youtubePlaylist = try TaskYoutubePlaylist(playlistName: playlistName,
                                                 videoCount: videoCount,
@@ -88,14 +88,14 @@ final class TaskYoutubePlaylist: TaskObject {
                                                 completedAt: nil,
                                                 expectedDeadline: expectedDeadline,
                                                 taskStatus: .notStarted,
-                                                isOnCreation: true
+                                                isOnCreation: isOnCreation
         )
         youtubePlaylist.currentState = NotStartedTaskYoutubePlaylistState(youtubePlaylist: youtubePlaylist)
         return youtubePlaylist
     }
     
     static func createInProgressYoutubePlaylist(playlistName: String, videoCount: Int, numVideosWatched: Int, linkToYoutube: String,
-                                              title: String, progress: Int, expectedStartDate: Date?, startDate: Date?, expectedDeadline: Date?, taskStatus: TaskStatus) throws -> TaskYoutubePlaylist {
+                                              title: String, progress: Int, expectedStartDate: Date?, startDate: Date?, expectedDeadline: Date?, taskStatus: TaskStatus, isOnCreation: Bool = true) throws -> TaskYoutubePlaylist {
         try TaskYoutubePlaylist.validateInputsForInProgressYoutubePlaylist(expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, startDate: startDate, progress: progress, numVideosWatched: numVideosWatched, videoCount: videoCount, linkToYoutube: linkToYoutube)
         
         let youtubePlaylist = try TaskYoutubePlaylist(playlistName: playlistName,
@@ -110,7 +110,7 @@ final class TaskYoutubePlaylist: TaskObject {
                                                 completedAt: nil,
                                                 expectedDeadline: expectedDeadline,
                                                 taskStatus: .inProgress,
-                                                isOnCreation: true
+                                                isOnCreation: isOnCreation
         )
         youtubePlaylist.currentState = InProgressTaskYoutubePlaylistState(youtubePlaylist: youtubePlaylist)
         return youtubePlaylist
@@ -121,7 +121,7 @@ final class TaskYoutubePlaylist: TaskObject {
                                              expectedStartDate: Date?,
                                              startDate: Date?,
                                              completedAt: Date,
-                                             expectedDeadline: Date?
+                                             expectedDeadline: Date?, isOnCreation: Bool = true
     ) throws -> TaskYoutubePlaylist {
         try TaskYoutubePlaylist.validateInputsForCompletedYoutubePlaylist(expectedStartDate: expectedStartDate, expectedDeadline: expectedDeadline, startDate: startDate, progress: 100, numVideosWatched: videoCount, videoCount: videoCount, linkToYoutube: linkToYoutube, completed: true, completedAt: completedAt)
         
@@ -137,7 +137,7 @@ final class TaskYoutubePlaylist: TaskObject {
                                                 completedAt: completedAt,
                                                 expectedDeadline: expectedDeadline,
                                                 taskStatus: .completed,
-                                                isOnCreation: true
+                                                isOnCreation: isOnCreation
         )
         youtubePlaylist.currentState = CompletedTaskYoutubePlaylistState(youtubePlaylist: youtubePlaylist)
         return youtubePlaylist

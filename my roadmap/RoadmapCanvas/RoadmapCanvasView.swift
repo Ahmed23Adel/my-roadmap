@@ -13,9 +13,11 @@ struct RoadmapCanvasView: View {
     @ObservedObject var roadmap: Roadmap
     @StateObject private var viewModel: RoadmapCanvasViewModel
     
-    init(roadmap: Roadmap) {
+    var showSheetFn: (TaskObject) -> Void
+    init(roadmap: Roadmap, showSheetFn: @escaping (TaskObject) -> Void) {
         self._roadmap = ObservedObject(initialValue: roadmap)
         self._viewModel = StateObject(wrappedValue: RoadmapCanvasViewModel(roadmap: roadmap))
+        self.showSheetFn = showSheetFn
     }
     
     var body: some View {
@@ -32,13 +34,13 @@ struct RoadmapCanvasView: View {
                 ForEach(0..<viewModel.roadmap.count, id: \.self) { index in
                     let singleTask = roadmap[index]
                     if let taskObject = singleTask as? TaskObject {
-                        DrawableSingleTask(singleTask: taskObject)
+                        DrawableSingleTask(singleTask: taskObject, showSheetFn: showSheetFn)
                             .position(x: singleTask.posX, y: singleTask.posY)
                     } else if let taskBranch = singleTask as? TaskBranch {
                         // Render individual tasks from both branches directly
                         ForEach(taskBranch.parallelBranches, id: \.id) { listOfTasks in
                             ForEach(listOfTasks.tasks, id: \.id) { task in
-                                DrawableSingleTask(singleTask: task)
+                                DrawableSingleTask(singleTask: task, showSheetFn: showSheetFn)
                                     .position(x: task.posX, y: task.posY)
                             }
                         }
@@ -147,5 +149,6 @@ struct RoadmapCanvasView: View {
     let roadmap = Roadmap()
     roadmap.initTestableRoadmap()
     roadmap.calcEachTaskPosition()
-    return RoadmapCanvasView(roadmap: roadmap)
+    let anyFunc = { (_: TaskObject) -> Void in }
+    return RoadmapCanvasView(roadmap: roadmap, showSheetFn: anyFunc )
 }

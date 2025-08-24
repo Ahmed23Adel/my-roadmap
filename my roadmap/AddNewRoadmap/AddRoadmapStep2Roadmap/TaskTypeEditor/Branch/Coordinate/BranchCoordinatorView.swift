@@ -10,12 +10,12 @@ import SwiftUI
 
 struct BranchCoordinatorView: View {
     @ObservedObject var coordinator = BranchCoordinator()
-    
+    var showSheetFn: (TaskObject) -> Void
     var body: some View {
         Group{
             switch coordinator.currentRoute { //START: switch
             case .taskTypeBranch:
-                TaskTypeBranchEditorView(tasksList1: $coordinator.tasksList1, tasksList2: $coordinator.tasksList2)
+                TaskTypeBranchEditorView(tasksList1: $coordinator.tasksList1, tasksList2: $coordinator.tasksList2, showSheetFn: showSheetFn )
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .move(edge: .leading).combined(with: .opacity)
@@ -61,5 +61,6 @@ struct BranchCoordinatorView: View {
     }
 }
 #Preview {
-    BranchCoordinatorView()
+    let anyFunc = { (_: TaskObject) in }
+    BranchCoordinatorView(showSheetFn: anyFunc )
 }
