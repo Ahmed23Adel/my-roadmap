@@ -29,6 +29,8 @@ class InProgressTaskBookState: InProgressTaskObjectState, TaskBookState{
     func increaseNumPagesReadBy(_ pagesRead: Int) throws {
         let newPagesRead = (taskBook?.numPagesRead ?? 0) + pagesRead
         try setNumPagesRead(newPagesRead)
+        let progressPercentage = (Double(newPagesRead) / Double(taskBook!.numPagesInBook)) * 100
+        try taskBook?.setProgress(Int(progressPercentage))
     }
     
     override func completeTask() throws {

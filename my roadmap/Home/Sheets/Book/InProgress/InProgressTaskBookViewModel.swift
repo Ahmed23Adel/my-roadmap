@@ -28,28 +28,26 @@ class InProgressTaskBookViewModel: ObservableObject {
         pagesToAdd += 1
     }
     
-    func decrementPagesToAdd() {
-        if pagesToAdd > 0 {
-            pagesToAdd -= 1
-        }
-    }
+    
     
     func updatePagesRead() {
-//        let newPagesRead = min(taskBook.numPagesRead + pagesToAdd, taskBook.numPagesInBook)
-//        taskBook.numPagesRead = newPagesRead
-//        pagesToAdd = 0
-//        
-//        // Auto-complete if all pages are read
-//        if newPagesRead >= taskBook.numPagesInBook {
-//            completeTask()
-//        }
+        do{
+            try taskBook.validateNumPagesRead(taskBook.numPagesRead + pagesToAdd)
+            try! taskBook.increaseNumPagesReadBy(pagesToAdd)
+            pagesToAdd = 0
+            roadmap.updateChanges()
+            
+        } catch {
+            pagesToAdd = 0
+        }
+        
     }
     
     func completeTask() {
-//        taskBook.completedAt = Date()
-//        taskBook.taskStatus = .completed
-//        taskBook.numPagesRead = taskBook.numPagesInBook // Ensure 100% completion
-        // Additional completion logic here
+        do{
+            try! taskBook.completeTask()
+            roadmap.updateChanges()
+        }
     }
 }
 

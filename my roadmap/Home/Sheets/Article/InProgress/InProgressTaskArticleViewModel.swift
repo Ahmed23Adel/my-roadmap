@@ -20,6 +20,7 @@ class InProgressTaskArticleViewModel: ObservableObject{
     func completeTask(){
         do{
             try! taskArticle.completeTask()
+            roadmap.updateChanges()
         }
     }
     

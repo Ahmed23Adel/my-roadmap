@@ -71,6 +71,36 @@ struct NotStartedTaskBookView: View {
                 .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
                 
                 
+                if viewModel.isPrevTaskCompleted() {
+                    VStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Label("Ready to Start", systemImage: "play.circle")
+                                .font(.title3)
+                                .foregroundColor(.blue)
+                            
+                            Text("Click the start button when you're ready to begin working on this task.")
+                                .font(.body)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+                        
+                        Button("Start Task") {
+                            viewModel.startTask()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .padding(.top)
+                    }
+                } else {
+                    VStack {
+                        Text("Please finish previous tasks to start this one")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                    }
+                }
+
+                
             } // END: main VStack
             .padding()
         }

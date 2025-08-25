@@ -28,8 +28,9 @@ class NotStartedTaskBookViewModel: ObservableObject {
     }
     
     func startTask() {
-//        taskBook.startDate = Date()
-//        taskBook.taskStatus = .inProgress
-        // Additional start logic here
+        do{
+            try! taskBook.startTask()
+            roadmap.updateChanges()
+        }
     }
 }

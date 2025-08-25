@@ -19,107 +19,170 @@ struct CompletedTaskBookView: View {
     }
     
     var body: some View {
-        VStack {
-            // Status Section
-            HStack {
-                Text("Task Status: ")
-                    .font(.title)
-                Spacer()
-                Text("Completed")
-                    .foregroundColor(.green)
-                    .font(.title)
-                Image("completedchecked")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30)
-            }
-            .padding()
-            
-            // Book Information Section
-            VStack {
-                HStack {
-                    Text("Book Name: ")
-                        .font(.title2)
-                    Spacer()
-                    Text(taskBook.bookName)
-                        .font(.title2)
-                }
+        ScrollView {
+            VStack(spacing: 16) {
                 
+                // Status Header
                 HStack {
-                    Text("Total Pages: ")
-                        .font(.title2)
-                    Spacer()
-                    Text("\(taskBook.numPagesInBook)")
-                        .font(.title2)
-                }
-                
-                HStack {
-                    Text("Pages Read: ")
-                        .font(.title2)
-                    Spacer()
-                    Text("\(taskBook.numPagesRead)")
-                        .font(.title2)
-                }
-                
-                HStack {
-                    Text("Reading Progress: ")
-                        .font(.title2)
-                    Spacer()
-                    Text("100%")
-                        .font(.title2)
-                        .foregroundColor(.green)
-                }
-            }
-            .padding()
-            
-            // Dates Section
-            VStack {
-                HStack {
-                    Text("Start date")
-                        .font(.title2)
-                    Spacer()
-                    Text(taskBook.startDate!, style: .date)
-                        .font(.title2)
-                }
-                
-                HStack {
-                    Text("Completed at: ")
-                        .font(.title2)
-                    Spacer()
-                    Text(taskBook.completedAt!, style: .date)
-                        .font(.title2)
-                }
-                
-                HStack {
-                    Text("Expected deadline ")
-                        .font(.title2)
-                    Spacer()
-                    Text(taskBook.expectedDeadline!, style: .date)
-                        .font(.title2)
-                }
-            }
-            .padding()
-            
-            // Completion Summary
-            if let completionSummary = viewModel.completionSummary {
-                VStack {
-                    Text("Completion Summary")
+                    Text("Task Status")
                         .font(.headline)
-                        .padding(.top)
+                    Spacer()
+                    Text("Completed")
+                        .font(.subheadline.bold())
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color.green)
+                        .cornerRadius(12)
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+                
+                // Completion Celebration
+                VStack(spacing: 12) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 60))
+                        .foregroundColor(.green)
                     
-                    Text(completionSummary)
+                    Text("Task Completed!")
+                        .font(.title2.bold())
+                        .foregroundColor(.green)
+                    
+                    Text("Great job on finishing this task!")
                         .font(.body)
                         .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding()
                 }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+                
+                // Article Info
+                VStack { // START VSTACK book_info
+                    HStack { // START HSTACK book_name
+                        Text("Book Name: ")
+                            .font(.title2)
+                        Spacer()
+                        Text(taskBook.bookName)
+                            .font(.title2)
+                    } // END HSTACK book_name
+                    
+                    HStack { // START HSTACK total_pages
+                        Text("Total Pages: ")
+                            .font(.title2)
+                        Spacer()
+                        Text("\(taskBook.numPagesInBook)")
+                            .font(.title2)
+                    } // END HSTACK total_pages
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+                
+                // Completion Summary
+                VStack(alignment: .leading, spacing: 8) {
+                    Label("Task Summary", systemImage: "list.clipboard")
+                        .font(.title3)
+                    
+                    if let startDate = taskBook.startDate,
+                       let completedAt = taskBook.completedAt {
+                        
+                        HStack {
+                            Label("Started", systemImage: "play.circle")
+                            Spacer()
+                            Text(startDate, style: .date)
+                        }
+                        
+                        HStack {
+                            Label("Completed", systemImage: "checkmark.circle")
+                            Spacer()
+                            Text(completedAt, style: .date)
+                        }
+                        
+                        HStack {
+                            Label("Duration", systemImage: "clock")
+                            Spacer()
+                            Text(durationText)
+                        }
+                        
+                        HStack {
+                            Label("On Time", systemImage: completedOnTime ? "checkmark.circle" : "xmark.circle")
+                            Spacer()
+                            Text(completedOnTime ? "Yes" : "No")
+                                .foregroundColor(completedOnTime ? .green : .red)
+                        }
+                    }
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+                                
+            }
+            .padding()
+        }
+        .navigationTitle("Completed")
+    }
+    
+    private var durationText: String {
+        guard let startDate = taskBook.startDate,
+              let completedAt = taskBook.completedAt else {
+            return "Unknown"
+        }
+        
+        let duration = Calendar.current.dateComponents([.day], from: startDate, to: completedAt)
+        let days = duration.day ?? 0
+        
+        if days == 0 {
+            return "Same day"
+        } else if days == 1 {
+            return "1 day"
+        } else {
+            return "\(days) days"
+        }
+    }
+    
+    private var completedOnTime: Bool {
+        guard let completedAt = taskBook.completedAt,
+              let deadline = taskBook.expectedDeadline else {
+            return false
+        }
+        return completedAt <= deadline
+    }
+    
+    
+}
+
+
+#Preview {
+    PreviewContentCompletedTaskBookView()
+}
+
+struct PreviewContentCompletedTaskBookView: View {
+    var body: some View {
+        do {
+            var pastDate: Date {
+                return Calendar.current.date(byAdding: .day, value: -10, to: Date())!
+            }
+            var futureDate: Date {
+                return Calendar.current.date(byAdding: .day, value: 10, to: Date())!
             }
             
-            Spacer()
+            let taskBook = try TaskBook.createCompletedBook(
+                bookName: "How to learn iOS",
+                numPagesInBook: 30,
+                numPagesRead: 3,
+                title: "Learn this",
+                expectedStartDate: pastDate,
+                startDate: pastDate,
+                completedAt: pastDate,
+                expectedDeadline: pastDate)
+            
+            
+           
+            let roadmap = Roadmap()
+            roadmap.append(taskBook)
+            return AnyView(CompletedTaskBookView(roadmap: roadmap , taskBook: taskBook))
+        } catch {
+            return AnyView(Text("Preview Error: \(error)")
+                .foregroundColor(.red))
         }
     }
 }
 
-//#Preview {
-//    CompletedTaskBookView()
-//}
+

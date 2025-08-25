@@ -187,6 +187,7 @@ final class TaskBook: TaskObject{
     
     func increaseNumPagesReadBy(_ numPagesRead: Int) throws {
         try currentStateCasted.increaseNumPagesReadBy(numPagesRead)
+        
     }
     
     
