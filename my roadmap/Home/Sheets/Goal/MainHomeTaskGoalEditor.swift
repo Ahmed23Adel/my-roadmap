@@ -12,128 +12,13 @@ struct MainHomeTaskGoalEditor: View {
     @ObservedObject var taskGoal: TaskGoal
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                
-                // MARK: Task Status
-                HStack {
-                    Text("Task Status")
-                        .font(.headline)
-                    Spacer()
-                    statusLabel
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-                
-                // MARK: Goal Details
-                VStack(alignment: .leading, spacing: 8) {
-                    Label("Goal Details", systemImage: "target")
-                        .font(.title3)
-                    
-                    Text(taskGoal.details)
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-                
-                // MARK: Dates
-                VStack(alignment: .leading, spacing: 8) {
-                    if taskGoal.taskStatus != .notStarted {
-                        HStack {
-                            Label("Start Date", systemImage: "calendar")
-                            Spacer()
-                            if let startDate = taskGoal.startDate {
-                                Text(startDate, style: .date)
-                            }
-                        }
-                    }
-                    
-                    if taskGoal.taskStatus == .completed {
-                        HStack {
-                            Label("Completed At", systemImage: "checkmark.circle")
-                            Spacer()
-                            if let completedAt = taskGoal.completedAt {
-                                Text(completedAt, style: .date)
-                            }
-                        }
-                    }
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-                
-                // MARK: Expected Dates
-                VStack(spacing: 8) {
-                    HStack {
-                        Label("Expected Start", systemImage: "calendar.badge.clock")
-                        Spacer()
-                        if let expectedStartDate = taskGoal.expectedStartDate {
-                            Text(expectedStartDate, style: .date)
-                        }
-                    }
-                    HStack {
-                        Label("Deadline", systemImage: "clock.fill")
-                        Spacer()
-                        if let expectedDeadline = taskGoal.expectedDeadline {
-                            Text(expectedDeadline, style: .date)
-                        }
-                    }
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-                
-                // MARK: Action Buttons
-                if taskGoal.taskStatus == .notStarted {
-                    Button("Start") {
-                        // start logic
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(.top)
-                }
-                
-                if taskGoal.taskStatus == .inProgress {
-                    Button("End") {
-                        // end logic
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(.top)
-                }
-            }
-            .padding()
-        }
-    }
-    
-    // MARK: Status Label View
-    private var statusLabel: some View {
         switch taskGoal.taskStatus {
         case .notStarted:
-            return Text("Not Started")
-                .font(.subheadline.bold())
-                .foregroundColor(.white)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Color.red)
-                .cornerRadius(12)
+            NotStartedTaskGoalView(roadmap: roadmap, taskGoal: taskGoal)
         case .inProgress:
-            return Text("In Progress")
-                .font(.subheadline.bold())
-                .foregroundColor(.white)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Color.yellow)
-                .cornerRadius(12)
+            CompletedTaskGoalView(roadmap: roadmap, taskGoal: taskGoal)
         case .completed:
-            return Text("Completed")
-                .font(.subheadline.bold())
-                .foregroundColor(.white)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Color.green)
-                .cornerRadius(12)
+            CompletedTaskGoalView(roadmap: roadmap, taskGoal: taskGoal)
         }
     }
 }
