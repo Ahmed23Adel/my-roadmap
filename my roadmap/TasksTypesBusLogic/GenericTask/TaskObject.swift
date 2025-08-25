@@ -28,7 +28,7 @@ class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable,
     private(set) var completed: Bool
     private(set) var completedAt: Date?
     private(set) var expectedDeadline: Date?
-    private(set) var taskStatus: TaskStatus
+    @Published private(set) var taskStatus: TaskStatus
     
     // MARK: - State property
     var currentState: TaskObjectState!
@@ -217,7 +217,7 @@ class TaskObject: GenericTask, StateLocalSyncTrackable, StateCloudSyncTrackable,
     
     static func validateInputsForInProgressTask(expectedStartDate: Date?, expectedDeadline: Date?, startDate: Date?, progress: Int) throws {
         // Check progress range
-        guard progress > 0 && progress < 100 else {
+        guard progress >= 0 && progress < 100 else {
             throw TaskValidationError.invalidProgressForInProgressTask
         }
         // Start date must be non-nil and not in the future

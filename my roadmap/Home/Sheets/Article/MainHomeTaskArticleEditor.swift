@@ -12,121 +12,14 @@ struct MainHomeTaskArticleEditor: View {
     @ObservedObject var taskArticle: TaskArticle
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                
-                // MARK: Task Status
-                HStack {
-                    Text("Task Status")
-                        .font(.headline)
-                    Spacer()
-                    statusLabel
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-                
-                // MARK: Article Info
-                VStack(alignment: .leading, spacing: 8) {
-                    Label(taskArticle.articleName, systemImage: "doc.text")
-                        .font(.title3)
-                    
-                    Button {
-                        if let url = URL(string: taskArticle.linkToArticle) {
-                            UIApplication.shared.open(url)
-                        }
-                    } label: {
-                        Label("Open Article", systemImage: "arrow.up.right.square")
-                    }
-                    .buttonStyle(.bordered)
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-                
-                // MARK: Dates
-                VStack(alignment: .leading, spacing: 8) {
-                    if taskArticle.taskStatus != .notStarted {
-                        HStack {
-                            Label("Start Date", systemImage: "calendar")
-                            Spacer()
-                            Text(taskArticle.startDate!, style: .date)
-                        }
-                    }
-                    
-                    if taskArticle.taskStatus == .completed {
-                        HStack {
-                            Label("Completed At", systemImage: "checkmark.circle")
-                            Spacer()
-                            Text(taskArticle.completedAt!, style: .date)
-                        }
-                    }
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-                
-                // MARK: Expected Dates
-                VStack(spacing: 8) {
-                    HStack {
-                        Label("Expected Start", systemImage: "calendar.badge.clock")
-                        Spacer()
-                        Text(taskArticle.expectedStartDate!, style: .date)
-                    }
-                    HStack {
-                        Label("Deadline", systemImage: "clock.fill")
-                        Spacer()
-                        Text(taskArticle.expectedDeadline!, style: .date)
-                    }
-                }
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
-                
-                // MARK: Action Buttons
-                if taskArticle.taskStatus == .notStarted {
-                    Button("Start") {
-                        // start logic
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(.top)
-                }
-                
-                if taskArticle.taskStatus == .inProgress {
-                    Button("End") {
-                        // end logic
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .padding(.top)
-                }
-            }
-            .padding()
-        }
-    }
-    
-    // MARK: Status Label View
-    private var statusLabel: some View {
+        // Navigate to appropriate view based on status
         switch taskArticle.taskStatus {
         case .notStarted:
-            return Text("Not Started")
-                .font(.subheadline.bold())
-                .foregroundColor(.white)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Color.red)
-                .cornerRadius(12)
+            NotStartedTaskArticleView(roadmap: roadmap, taskArticle: taskArticle)
         case .inProgress:
-            return Text("In Progress")
-                .font(.subheadline.bold())
-                .foregroundColor(.white)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Color.yellow)
-                .cornerRadius(12)
+            InProgressTaskArticleView(roadmap: roadmap, taskArticle: taskArticle)
         case .completed:
-            return Text("Completed")
-                .font(.subheadline.bold())
-                .foregroundColor(.white)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Color.green)
-                .cornerRadius(12)
+            CompletedTaskArticleView(roadmap: roadmap, taskArticle: taskArticle)
         }
     }
 }

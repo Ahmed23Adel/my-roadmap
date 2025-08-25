@@ -7,12 +7,14 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class Roadmap: ObservableObject, JsonExtractor{
     
     
     @Published private(set) var roadmap: [any GenericState] = []
-    @Published private(set) var roadmapName: String = ""
+    @AppStorage(GlobalConstants.selectedRoadmapKey) var defaultRoadmapName: String = ""
+    
     var count: Int{
         roadmap.count
     }
@@ -151,4 +153,119 @@ class Roadmap: ObservableObject, JsonExtractor{
         }
     }
     
+    func isPrevTaskFinished(singleTask: TaskObject) -> Bool {
+        // Find the task's position in the roadmap
+        if let taskPosition = findTaskPosition(singleTask: singleTask) {
+            return isPreviousItemCompleted(at: taskPosition)
+        }
+        return false // Task not found in roadmap
+    }
+
+    private func findTaskPosition(singleTask: TaskObject) -> TaskPosition? {
+        for (roadmapIndex, item) in roadmap.enumerated() {
+            if let task = item as? TaskObject {
+                if task.id == singleTask.id {
+                    return TaskPosition(roadmapIndex: roadmapIndex, branchIndex: nil, taskIndex: nil)
+                }
+            } else if let branch = item as? TaskBranch {
+                for (branchIndex, tasks) in branch.parallelBranches.enumerated() {
+                    for (taskIndex, task) in tasks.enumerated() {
+                        if task.id == singleTask.id {
+                            return TaskPosition(roadmapIndex: roadmapIndex, branchIndex: branchIndex, taskIndex: taskIndex)
+                        }
+                    }
+                }
+            }
+        }
+        return nil
+    }
+
+    private func isPreviousItemCompleted(at position: TaskPosition) -> Bool {
+        // If task is in a branch
+        if let branchIndex = position.branchIndex, let taskIndex = position.taskIndex {
+            // If it's the first task in the branch, check previous roadmap item
+            if taskIndex == 0 {
+                return isPreviousRoadmapItemCompleted(at: position.roadmapIndex)
+            } else {
+                // Check previous task in the same branch
+                guard let branch = roadmap[position.roadmapIndex] as? TaskBranch,
+                      branchIndex < branch.parallelBranches.count,
+                      taskIndex > 0,
+                      taskIndex <= branch.parallelBranches[branchIndex].count else {
+                    return false
+                }
+                return branch.parallelBranches[branchIndex][taskIndex - 1].taskStatus == .completed
+            }
+        } else {
+            // Task is directly in roadmap (not in a branch)
+            return isPreviousRoadmapItemCompleted(at: position.roadmapIndex)
+        }
+    }
+
+    private func isPreviousRoadmapItemCompleted(at roadmapIndex: Int) -> Bool {
+        // First item in roadmap has no previous item
+        if roadmapIndex == 0 {
+            return true
+        }
+        
+        guard roadmapIndex > 0 && roadmapIndex < roadmap.count else {
+            return false
+        }
+        
+        let previousItem = roadmap[roadmapIndex - 1]
+        
+        if let previousTask = previousItem as? TaskObject {
+            return previousTask.taskStatus == .completed
+        } else if let previousBranch = previousItem as? TaskBranch {
+            return isBranchCompleted(previousBranch)
+        }
+        
+        return false
+    }
+
+    private func isBranchCompleted(_ branch: TaskBranch) -> Bool {
+        // Branch is completed when all parallel branches are completed
+        // Each parallel branch is completed when its last task is completed
+        guard branch.parallelBranches.count == 2 else {
+            return false // Expecting exactly 2 branches as per requirement
+        }
+        
+        for parallelBranch in branch.parallelBranches {
+            guard !parallelBranch.isEmpty else {
+                return false // Empty branch shouldn't exist
+            }
+            
+            // Check if the last task in this parallel branch is completed
+            let lastTask = parallelBranch.last!
+            if lastTask.taskStatus != .completed {
+                return false
+            }
+        }
+        
+        return true
+    }
+
+    // Helper struct to represent task position
+    private struct TaskPosition {
+        let roadmapIndex: Int
+        let branchIndex: Int?
+        let taskIndex: Int?
+    }
+
+    
+    func updateChanges(){
+        let roadmapString = self.getJson()
+        print("roadmapString", roadmapString)
+        
+        let fileName = FileNameCreator().create(fileName: defaultRoadmapName)
+        print("Generated filename:", fileName)
+        
+        do {
+            let jsonSaver = try LocalJsonFileSaver(fileName: fileName)
+            try jsonSaver.save(jsonString: roadmapString)
+            print("File saved successfully to:", fileName)
+        } catch {
+            print("Error saving:", error)
+        }
+    }
 }
