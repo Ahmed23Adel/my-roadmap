@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GenericViewTaskType: View {
-    var singleTask: TaskObject
+    @ObservedObject var singleTask: TaskObject
     @StateObject var viewModel: GenericViewModelTaskType
     private var Tasklabel: String
     private var imgName: String

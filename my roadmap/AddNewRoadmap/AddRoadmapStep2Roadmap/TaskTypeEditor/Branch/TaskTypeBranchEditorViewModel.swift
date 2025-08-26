@@ -35,16 +35,13 @@ class TaskTypeBranchEditorViewModel: ObservableObject{
     }
     
     func addTask(){
-        print("h1")
         if validateInputs(){
-            print("h2", )
             mainCoordinator?.creatableRoadmap.initBranch(title: taskTitle)
             mainCoordinator?.creatableRoadmap.addListOfTasks(branchCoordinator!.tasksList1)
             mainCoordinator?.creatableRoadmap.addListOfTasks(branchCoordinator!.tasksList2)
             mainCoordinator?.creatableRoadmap.finishBranch()
             chooseTaskTypeCoordinator?.navigateTo(.chooseType)
         } else{
-            print("h3")
             showErrorAlert()
         }
         
@@ -71,9 +68,7 @@ class TaskTypeBranchEditorViewModel: ObservableObject{
     }
     
     func isDisabledGlobal() -> Bool {
-        print("isDisabledGlobal1")
         guard let coordinator = branchCoordinator else { return true }
-        print("isDisabledGlobal2")
         return coordinator.tasksList1.isEmpty || coordinator.tasksList2.isEmpty || taskTitle.isEmpty
     }
     

@@ -22,7 +22,6 @@ class NotStartedTaskArticleViewModel: ObservableObject{
     }
     
     func start(){
-        print("start")
         do{
             try! taskArticle.startTask()
             roadmap.updateChanges()

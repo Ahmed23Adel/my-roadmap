@@ -14,13 +14,13 @@ class Roadmap: ObservableObject, JsonExtractor{
     
     @Published private(set) var roadmap: [any GenericState] = []
     @AppStorage(GlobalConstants.selectedRoadmapKey) var defaultRoadmapName: String = ""
-    
     var count: Int{
         roadmap.count
     }
-    
+    //8->2
     subscript(index: Int) -> any GenericState{
-        roadmap[index]
+        print("roadmap", roadmap, index)
+        return roadmap[index]
     }
     
     func initTestableRoadmap(){

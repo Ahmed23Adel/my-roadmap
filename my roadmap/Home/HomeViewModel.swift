@@ -12,14 +12,22 @@ import SwiftUI
 class HomeViewModel: ObservableObject{
     var mainCoordinator: Coordinator?
     var homeCoordinator: HomeCoordinator?
+    
     @Published private var roadmap: Roadmap
+    @Published var isLoadingRoadmap = false
+    
+    private let defaultRoadmapReader = DefaultRoadmapReader()
+    private var currentRoadmapName: String = ""
+    
     @AppStorage(GlobalConstants.selectedRoadmapKey) var defaultRoadmapName: String = ""
     
     @Published var showSheet = false
     @Published var selectedSheet: TaskObject?
+    
     init(){
-        let defaultRoadmapReader = DefaultRoadmapReader()
         roadmap = defaultRoadmapReader.read()
+        currentRoadmapName = defaultRoadmapName
+        print("HomeViewModel initialized with roadmap count: \(roadmap.count)")
     }
     
     func setMainCoordinator(coordinator: Coordinator){
@@ -35,12 +43,11 @@ class HomeViewModel: ObservableObject{
         return roadmap
     }
     
-
-    
-    
-    
     func getRoadmapName() -> String{
-        defaultRoadmapName
+        if currentRoadmapName.isEmpty{
+            return defaultRoadmapName
+        }
+        return currentRoadmapName
     }
     
     func navigateToAddNewRoadmap(){
@@ -56,4 +63,28 @@ class HomeViewModel: ObservableObject{
         showSheet = true
     }
     
+    func updateRoadmapName(_ name: String) {
+        guard currentRoadmapName != name else { return }
+        
+        print("Starting roadmap update from '\(currentRoadmapName)' to '\(name)'")
+        
+        // Step 1: Set loading state - this prevents UI from rendering
+        isLoadingRoadmap = true
+        
+        // Step 2: Update the name
+        currentRoadmapName = name
+        
+        // Step 3: Load new roadmap asynchronously
+        DispatchQueue.global(qos: .userInitiated).async {
+            let newRoadmap = self.defaultRoadmapReader.read()
+            print("New roadmap loaded with \(newRoadmap.count) tasks")
+            
+            // Step 4: Update UI on main thread after roadmap is fully loaded
+            DispatchQueue.main.async {
+                self.roadmap = newRoadmap
+                self.isLoadingRoadmap = false  // This triggers UI to render
+                print("Roadmap update completed and UI notified")
+            }
+        }
+    }
 }
