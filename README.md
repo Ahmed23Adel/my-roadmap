@@ -92,7 +92,7 @@ This project is built with a modern stack that ensures **scalability, security, 
 
 ### 🧪 Testing & Collaboration
 - **Unit Testing** – Core libraries (AuthManager, ApiCaller, Validator) tested for reliability and correctness  
-- **Git & GitHub** – Version control, collaboration, and project hosting  
+- **Git & GitHub** – Version control
 
 
 
