@@ -1,4 +1,9 @@
+# Summary
+A personalized learning management system that enables users to create structured roadmaps with diverse content types and enforces sequential progress tracking to maintain motivation and accountability.
 
+* Diverse Learning Paths: Create roadmaps combining books, articles, YouTube playlists, goals, and branching paths for comprehensive skill development
+* Sequential Learning Flow: Enforces prerequisite completion before advancing, ensuring solid foundation building and preventing knowledge gaps
+* Granular Progress Tracking: Monitor detailed progress (pages read, videos watched) with status indicators that maintain motivation and accountability
 
 
 # Authentication & API Management
@@ -64,6 +69,30 @@ Easily monitor your learning journey with **detailed progress tracking** and **t
 <img src="https://github.com/user-attachments/assets/1ad73195-6a34-43ee-963c-fcd59088d547" width="250" />
 <img src="https://github.com/user-attachments/assets/7e6b54bb-7e76-454b-b971-cb8b369bea22" width="250" />
 
+
+
+# ⚙️ Technologies Used
+
+This project is built with a modern stack that ensures **scalability, security, and a smooth user experience**:
+
+- **Swift (iOS)** – Core language for building the app, leveraging UIKit and SwiftUI where appropriate  
+- **Xcode** – Primary IDE for development, debugging, and testing  
+- **Combine** – Reactive framework for handling asynchronous events and data streams  
+- **FileManager** – Local file storage for roadmap files
+- **Keychain Services** – Secure storage of authentication tokens and sensitive user data  
+
+### 🔒 Custom Libraries
+- [AdelsonAuthManager](https://github.com/Ahmed23Adel/AdelsonAuthManager) – Authentication and token management  
+- [AdelsonApiCaller](https://github.com/Ahmed23Adel/AdelsonApiCaller) – API communication with auto token refresh  
+- [AdelsonValidator](https://github.com/Ahmed23Adel/AdelsonValidator) – Input validation for forms and credentials  
+
+### 🌐 Networking & Data
+- **RESTful APIs** – Communication with backend services for authentication, progress updates, and roadmap data  
+- **JSON** – Data serialization between client and server  
+
+### 🧪 Testing & Collaboration
+- **Unit Testing** – Core libraries (AuthManager, ApiCaller, Validator) tested for reliability and correctness  
+- **Git & GitHub** – Version control, collaboration, and project hosting  
 
 
 
