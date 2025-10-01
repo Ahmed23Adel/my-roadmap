@@ -70,6 +70,11 @@ Easily monitor your learning journey with **detailed progress tracking** and **t
 <img src="https://github.com/user-attachments/assets/7e6b54bb-7e76-454b-b971-cb8b369bea22" width="250" />
 
 
+# Widgets
+Created a widget to show the current task that is being worked on, in addition to the percentage of completion
+
+<img width="225" height="228" alt="Screenshot 2025-10-01 at 4 46 52 PM" src="https://github.com/user-attachments/assets/d0619d1d-bef9-4542-a03c-152be9d3aac4" />
+
 
 # ⚙️ Technologies Used
 
