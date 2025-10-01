@@ -27,7 +27,7 @@ class HomeViewModel: ObservableObject{
     init(){
         roadmap = defaultRoadmapReader.read()
         currentRoadmapName = defaultRoadmapName
-        print("HomeViewModel initialized with roadmap count: \(roadmap.count)")
+        
     }
     
     func setMainCoordinator(coordinator: Coordinator){

@@ -18,6 +18,14 @@ struct my_roadmapApp: App {
                 .task {
                     await AdelsonConfigHolder.shared.ensureConfigLoaded()
                 }
+                .task{
+                    let roadmap = DefaultRoadmapReader().read()
+                    let (name, progress) = roadmap.getCurrentTask()
+                    CurrentTaskDataManager.shared.saveTask(name: name, completion: progress)
+                    print("widget data saved")
+                    print(CurrentTaskDataManager.shared.loadTask())
+                    
+                }
         }
     }
 }

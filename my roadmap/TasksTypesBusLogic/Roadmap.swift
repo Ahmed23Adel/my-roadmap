@@ -268,4 +268,119 @@ class Roadmap: ObservableObject, JsonExtractor{
             print("Error saving:", error)
         }
     }
+    
+    
+    func getCurrentTask() -> (name: String, progress: Int) {
+        // Find the task that is currently in progress
+        for item in roadmap {
+            if let task = item as? TaskObject {
+                // Check if this task is in progress
+                if task.taskStatus == .inProgress {
+                    let progress = calculateTaskProgress(task: task)
+                    return (name: task.title, progress: progress)
+                }
+            } else if let branch = item as? TaskBranch {
+                // Check both parallel branches for in-progress tasks
+                if let currentTaskInBranch = findCurrentTaskInBranch(branch: branch) {
+                    return currentTaskInBranch
+                }
+            }
+        }
+        
+        // If no task is in progress, return a default message
+        return (name: "No task in progress", progress: 0)
+    }
+
+    private func findCurrentTaskInBranch(branch: TaskBranch) -> (name: String, progress: Int)? {
+        // Find the most progressed branch (the one that should be worked on)
+        var selectedBranchIndex = 0
+        var maxProgress = -1
+        
+        // Determine which branch to focus on based on progress
+        for (index, parallelBranch) in branch.parallelBranches.enumerated() {
+            let branchProgress = calculateBranchProgress(tasks: parallelBranch)
+            if branchProgress > maxProgress {
+                maxProgress = branchProgress
+                selectedBranchIndex = index
+            }
+        }
+        
+        // Find the first incomplete task in the selected branch
+        let selectedBranch = branch.parallelBranches[selectedBranchIndex]
+        for task in selectedBranch {
+            if task.taskStatus != .completed {
+                let progress = calculateTaskProgress(task: task)
+                return (name: task.title, progress: progress)
+            }
+        }
+        
+        // If the selected branch is complete, check the other branch
+        let otherBranchIndex = selectedBranchIndex == 0 ? 1 : 0
+        if otherBranchIndex < branch.parallelBranches.count {
+            let otherBranch = branch.parallelBranches[otherBranchIndex]
+            for task in otherBranch {
+                if task.taskStatus != .completed {
+                    let progress = calculateTaskProgress(task: task)
+                    return (name: task.title, progress: progress)
+                }
+            }
+        }
+        
+        return nil // All tasks in branch are completed
+    }
+
+    private func calculateBranchProgress(tasks: ListOfTasks) -> Int {
+        guard !tasks.isEmpty else { return 0 }
+        
+        var totalProgress = 0
+        for task in tasks {
+            totalProgress += calculateTaskProgress(task: task)
+        }
+        
+        return totalProgress / tasks.count
+    }
+
+    private func calculateTaskProgress(task: TaskObject) -> Int {
+        switch task.taskStatus {
+        case .notStarted:
+            return 0
+        case .inProgress:
+            // Calculate progress based on task type
+            if let bookTask = task as? TaskBook {
+                return calculateBookProgress(book: bookTask)
+            } else if let playlistTask = task as? TaskYoutubePlaylist {
+                return calculatePlaylistProgress(playlist: playlistTask)
+            } else if let articleTask = task as? TaskArticle {
+                return calculateArticleProgress(article: articleTask)
+            }
+            // Default to 50% for generic in-progress tasks
+            return 50
+        case .completed:
+            return 100
+        }
+    }
+
+    private func calculateBookProgress(book: TaskBook) -> Int {
+        guard book.numPagesInBook > 0 else { return 0 }
+        let progress = (Double(book.numPagesRead) / Double(book.numPagesInBook)) * 100
+        return Int(progress)
+    }
+
+    private func calculatePlaylistProgress(playlist: TaskYoutubePlaylist) -> Int {
+        guard playlist.videoCount > 0 else { return 0 }
+        let progress = (Double(playlist.numVideosWatched) / Double(playlist.videoCount)) * 100
+        return Int(progress)
+    }
+
+    private func calculateArticleProgress(article: TaskArticle) -> Int {
+        // Articles are either not started (0%), in progress (50%), or completed (100%)
+        switch article.taskStatus {
+        case .notStarted:
+            return 0
+        case .inProgress:
+            return 50
+        case .completed:
+            return 100
+        }
+    }
 }
