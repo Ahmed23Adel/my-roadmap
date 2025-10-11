@@ -8,7 +8,7 @@
 import SwiftUI
 import AdelsonAuthManager
 import AdelsonValidator
-
+import WidgetKit
 @main
 struct my_roadmapApp: App {
     
@@ -24,8 +24,27 @@ struct my_roadmapApp: App {
                     CurrentTaskDataManager.shared.saveTask(name: name, completion: progress)
                     print("widget data saved")
                     print(CurrentTaskDataManager.shared.loadTask())
+                    WidgetCenter.shared.reloadAllTimelines()
                     
                 }
+                .task{
+                    await requestNotificationPermission()
+                }
+        }
+    }
+    
+    func requestNotificationPermission() async {
+        do{
+            let granted = try await UNUserNotificationCenter.current().requestAuthorization(
+                options: [.alert, .sound,.badge]
+            )
+            if granted {
+                print("✅ Notification permission granted")
+            } else {
+                print("❌ Notification permission denied")
+            }
+        } catch {
+            print("❌ Error requesting notification permission: \(error)")
         }
     }
 }

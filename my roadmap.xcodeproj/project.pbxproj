@@ -53,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E228AE562E91B5F3003BE589 /* CurrentTaskWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CurrentTaskWidgetExtension.entitlements; sourceTree = "<group>"; };
 		E22E49052E2E44A100619289 /* my roadmap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "my roadmap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E22E49122E2E44A300619289 /* my roadmapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "my roadmapTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E22E491C2E2E44A300619289 /* my roadmapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "my roadmapUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +137,7 @@
 		E22E48FC2E2E44A100619289 = {
 			isa = PBXGroup;
 			children = (
+				E228AE562E91B5F3003BE589 /* CurrentTaskWidgetExtension.entitlements */,
 				E22E49072E2E44A100619289 /* my roadmap */,
 				E22E49152E2E44A300619289 /* my roadmapTests */,
 				E22E491F2E2E44A300619289 /* my roadmapUITests */,
@@ -671,6 +673,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CurrentTaskWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z6S698QJX2;
@@ -700,6 +703,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CurrentTaskWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z6S698QJX2;

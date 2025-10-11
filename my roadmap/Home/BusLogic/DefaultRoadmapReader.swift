@@ -53,6 +53,7 @@ class DefaultRoadmapReader: ObservableObject {
    ///
    /// If the `defaultRoadmapName` is empty or the file does not exist, this method returns without changes.
     func loadDefaultRoadmapContent() {
+        print("Reading roadmap \(defaultRoadmapName)")
         guard !defaultRoadmapName.isEmpty else { return }
         
         do {

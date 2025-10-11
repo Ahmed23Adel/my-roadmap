@@ -14,7 +14,17 @@ class SettingsViewModel: ObservableObject{
     @Published var showError: Bool = false
     @Published var erroMsg = ""
     
-    @AppStorage(GlobalConstants.selectedRoadmapKey) var defaultRoadmapName: String = ""
+    @AppStorage(GlobalConstants.selectedRoadmapKey) private var storedRoadmapName: String = ""
+
+    var defaultRoadmapName: String {
+        get { storedRoadmapName }
+        set {
+            
+            storedRoadmapName = newValue
+            let roadmap = DefaultRoadmapReader().read()
+            NotificationManager.shard.scheduleNotificationsForRoadmap(roadmap: roadmap)
+        }
+    }
     
     
     var sortedRoadmapNames: [String] {
