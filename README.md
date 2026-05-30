@@ -102,7 +102,6 @@ Easily monitor your learning journey with detailed progress tracking and task ma
 <div style="display: flex; gap: 10px; justify-content: center; margin: 20px 0; flex-wrap: wrap;">
   <img src="https://github.com/user-attachments/assets/ce772d68-587c-49c7-b398-bfe42dd493bc" width="180" alt="Task not started"/>
   <img src="https://github.com/user-attachments/assets/67786717-f6c8-4847-b6f6-32a54ba7ec45" width="180" alt="Task in progress"/>
-  <img src="https://github.com/user-attachments/assets/1ad73189-6a34-43ee-963c-fcd59088d547" width="180" alt="Task completed"/>
 </div>
 
 ---
