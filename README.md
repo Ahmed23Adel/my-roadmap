@@ -440,7 +440,7 @@ Building tools for structured learning.
 
 <div align="center">
 
-**Interested in the work?** Feel free to reach out: [abooufm709@gmail.com](mailto:abooufm709@gmail.com)
+**Interested in the work?** Feel free to reach out: [abooufm709@gmail.com](mailto:ahmed.hussein.1521@gmail.com)
 
 ⭐ If you found this helpful, consider starring the repo!
 
