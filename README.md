@@ -70,7 +70,6 @@ Each task type has tailored state management (Not Started → In Progress → Co
   <img src="https://github.com/user-attachments/assets/4948d04c-b046-46cc-bd2f-df6245c53c45" width="180" alt="Choose task type"/>
   <img src="https://github.com/user-attachments/assets/89633d85-145d-422f-9472-0d5dfec5cf18" width="180" alt="Add tasks"/>
   <img src="https://github.com/user-attachments/assets/440495f9-7ef2-4128-b09f-1f2877eba7ae" width="180" alt="Task builder"/>
-  <img src="https://github.com/user-attachments/assets/93a0e1a7-bfc5-4c7c-a5a6-dfc5c708506a9" width="180" alt="Roadmap complete"/>
 </div>
 
 ---
@@ -104,7 +103,6 @@ Easily monitor your learning journey with detailed progress tracking and task ma
   <img src="https://github.com/user-attachments/assets/ce772d68-587c-49c7-b398-bfe42dd493bc" width="180" alt="Task not started"/>
   <img src="https://github.com/user-attachments/assets/67786717-f6c8-4847-b6f6-32a54ba7ec45" width="180" alt="Task in progress"/>
   <img src="https://github.com/user-attachments/assets/1ad73189-6a34-43ee-963c-fcd59088d547" width="180" alt="Task completed"/>
-  <img src="https://github.com/user-attachments/assets/4b9e1e47-8d9e-49e3-87e6-9b1a2c3f5d6e" width="180" alt="Multiple tasks"/>
 </div>
 
 ---
@@ -113,7 +111,9 @@ Easily monitor your learning journey with detailed progress tracking and task ma
 
 At-a-glance task summary showing current task and completion percentage.
 
-<img src="https://github.com/user-attachments/assets/d0619d1d-bef9-4542-a03c-152be9d3aac4" width="200" alt="Widget showing current task and progress"/>
+<div style="display: flex; justify-content: center; margin: 20px 0;">
+  <img src="https://github.com/user-attachments/assets/d0619d1d-bef9-4542-a03c-152be9d3aac4" width="220" alt="Widget showing current task and progress"/>
+</div>
 
 ---
 
