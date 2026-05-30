@@ -33,7 +33,27 @@ Built with production-ready patterns and battle-tested iOS architecture, My Road
 
 ## Core Features
 
-### 1️⃣ Structured Learning Paths
+### 1️⃣ Authentication & Secure API Management
+
+Built on three custom libraries for seamless auth handling:
+
+- [**AdelsonAuthManager**](https://github.com/Ahmed23Adel/AdelsonAuthManager) — Handles signup, login, and token refresh with secure keychain storage  
+- [**AdelsonApiCaller**](https://github.com/Ahmed23Adel/AdelsonApiCaller) — Automatically attaches tokens to requests, refreshes expired tokens, and re-authenticates when needed  
+- [**AdelsonValidator**](https://github.com/Ahmed23Adel/AdelsonValidator) — Client-side validation for email format and password policies (easy/medium/hard), and any custom validation  
+
+**How It Works:**
+1. Validate input with AdelsonValidator
+2. Send request via AdelsonApiCaller
+3. Handle auth automatically with AdelsonAuthManager
+
+<div style="display: flex; gap: 20px; justify-content: center; margin: 20px 0;">
+  <img src="https://github.com/user-attachments/assets/53753ffc-ad80-44a9-b1a4-36cf54524995" width="280" alt="Sign up screen"/>
+  <img src="https://github.com/user-attachments/assets/2e602fdc-a843-42fb-85f4-458a2400c2d4" width="280" alt="Login screen"/>
+</div>
+
+---
+
+### 2️⃣ Structured Learning Paths
 
 Create roadmaps combining multiple content types:
 
@@ -43,9 +63,19 @@ Create roadmaps combining multiple content types:
 - 🎯 **Goals** — Define milestone achievements
 - 🔀 **Branches** — Optional parallel learning paths (prerequisite-aware)
 
-Each task type has tailored state management (Not Started → In Progress → Completed).
+Each task type has tailored state management (Not Started → In Progress → Completed) with content-specific tracking.
 
-### 2️⃣ Sequential Learning Enforcement
+<div style="display: flex; gap: 10px; justify-content: center; margin: 20px 0; flex-wrap: wrap;">
+  <img src="https://github.com/user-attachments/assets/fdb120c5-f60d-4208-8e1a-4b456a5caf51" width="180" alt="Create roadmap step 1"/>
+  <img src="https://github.com/user-attachments/assets/4948d04c-b046-46cc-bd2f-df6245c53c45" width="180" alt="Choose task type"/>
+  <img src="https://github.com/user-attachments/assets/89633d85-145d-422f-9472-0d5dfec5cf18" width="180" alt="Add tasks"/>
+  <img src="https://github.com/user-attachments/assets/440495f9-7ef2-4128-b09f-1f2877eba7ae" width="180" alt="Task builder"/>
+  <img src="https://github.com/user-attachments/assets/93a0e1a7-bfc5-4c7c-a5a6-dfc5c708506a9" width="180" alt="Roadmap complete"/>
+</div>
+
+---
+
+### 3️⃣ Sequential Learning Enforcement
 
 Prevents knowledge gaps by locking tasks until prerequisites complete:
 
@@ -54,24 +84,36 @@ Prevents knowledge gaps by locking tasks until prerequisites complete:
 - 🎯 Users can only start one valid path at a time
 - 📊 Progress validation prevents invalid state transitions
 
-### 3️⃣ Granular Progress Tracking
+---
 
-Real-time progress updates with accountability:
+### 4️⃣ Granular Progress Tracking & Task Management
 
-- 📈 **Pages read** in books (e.g., "45 of 312 pages")
-- 🎬 **Videos watched** in playlists (e.g., "3 of 8 videos")
-- ⏱️ **Time invested** in goals with manual logging
-- 🔔 **Daily reminders** for unfinished tasks (push notifications)
-- 💾 **Sync to backend** for cross-device access
+Easily monitor your learning journey with detailed progress tracking and task management tools.
 
-### 4️⃣ Home Screen Widget
+#### ✅ Task Status Types
+* 🔴 **Not Started** – Tasks waiting for prerequisites to be completed  
+* 🟠 **In Progress** – Currently active tasks with deadlines  
+* 🟢 **Completed** – Finished tasks with a completion summary  
 
-At-a-glance task summary on iOS lock screen:
+#### 🔑 Key Features
+1. 🚦 Users can't start a task until **previous tasks are completed** (sequential learning flow).  
+2. 📈 Users can **update their progress** (e.g., mark videos watched in a YouTube playlist, or pages read in a book).  
+3. 📝 Detailed task tracking helps maintain **motivation and accountability**.  
 
-- Shows current task in focus
-- Real-time completion percentage
-- Updates via AppGroups shared container
-- Updated on app launch and task changes
+<div style="display: flex; gap: 10px; justify-content: center; margin: 20px 0; flex-wrap: wrap;">
+  <img src="https://github.com/user-attachments/assets/ce772d68-587c-49c7-b398-bfe42dd493bc" width="180" alt="Task not started"/>
+  <img src="https://github.com/user-attachments/assets/67786717-f6c8-4847-b6f6-32a54ba7ec45" width="180" alt="Task in progress"/>
+  <img src="https://github.com/user-attachments/assets/1ad73189-6a34-43ee-963c-fcd59088d547" width="180" alt="Task completed"/>
+  <img src="https://github.com/user-attachments/assets/4b9e1e47-8d9e-49e3-87e6-9b1a2c3f5d6e" width="180" alt="Multiple tasks"/>
+</div>
+
+---
+
+### 5️⃣ Home Screen Widget
+
+At-a-glance task summary showing current task and completion percentage.
+
+<img src="https://github.com/user-attachments/assets/d0619d1d-bef9-4542-a03c-152be9d3aac4" width="200" alt="Widget showing current task and progress"/>
 
 ---
 
@@ -399,7 +441,7 @@ Building tools for structured learning.
 
 <div align="center">
 
-**Interested in the work?** Feel free to reach out: [abooufm709@gmail.com](mailto:ahmed.hussein.1521@gmail.com)
+**Interested in the work?** Feel free to reach out: [abooufm709@gmail.com](mailto:abooufm709@gmail.com)
 
 ⭐ If you found this helpful, consider starring the repo!
 
